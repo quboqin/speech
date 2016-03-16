@@ -21,8 +21,7 @@
 #import <RxLibrary/GRXBufferedPipe.h>
 #import <ProtoRPC/ProtoRPC.h>
 
-#define APIKEY @"AIzaSyAagYqOIxz8X-hkodBKb7DSZFa3ol47P_8"
-#define APICLIENT @"com.google.talk-200"
+#define APIKEY @"your-api-key"
 #define HOST @"speech.googleapis.com"
 
 @interface SpeechRecognitionService ()
