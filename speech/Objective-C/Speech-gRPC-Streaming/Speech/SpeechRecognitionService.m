@@ -21,7 +21,7 @@
 #import <RxLibrary/GRXBufferedPipe.h>
 #import <ProtoRPC/ProtoRPC.h>
 
-#define APIKEY @"your-api-key"
+#define API_KEY @"YOUR_API_KEY"
 #define HOST @"speech.googleapis.com"
 
 @interface SpeechRecognitionService ()
@@ -69,7 +69,7 @@
                                              completion(response);
                                            }
                                          }];
-    _call.requestHeaders[@"X-Goog-Api-Key"] = APIKEY;
+    _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
     NSLog(@"HEADERS: %@", _call.requestHeaders);
     [_call start];
 

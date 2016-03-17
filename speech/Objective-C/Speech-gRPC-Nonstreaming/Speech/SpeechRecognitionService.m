@@ -20,7 +20,7 @@
 #import <GRPCClient/GRPCCall.h>
 #import <ProtoRPC/ProtoRPC.h>
 
-#define APIKEY @"your-api-key"
+#define API_KEY @"YOUR_API_KEY"
 
 @implementation SpeechRecognitionService
 
@@ -75,7 +75,7 @@
                       }
                     }];
 
-  call.requestHeaders[@"X-Goog-Api-Key"] = APIKEY;
+  call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
   NSLog(@"HEADERS: %@", call.requestHeaders);
   [call start];
 }
