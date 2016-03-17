@@ -58,6 +58,7 @@
                       NSLog(@"RESPONSE RECEIVED");
                       if (error) {
                         NSLog(@"ERROR: %@", error);
+                        completion([error description]);
                       } else {
                         for (RecognizeResponse *recognizeResponse in response.responsesArray) {
                           NSLog(@"RESPONSE");
