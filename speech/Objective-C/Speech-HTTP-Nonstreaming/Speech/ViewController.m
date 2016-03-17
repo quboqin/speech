@@ -18,8 +18,7 @@
 #import "ViewController.h"
 #import "GCPNSObject+HTTPHelpers.h"
 
-#define APIKEY @"your-api-key"
-#define APICLIENT @"your-client-app-id"
+#define API_KEY @"YOUR_API_KEY"
 
 @interface ViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
@@ -95,8 +94,7 @@
   NSString *service = @"https://www.google.com/speech-api/v2/recognize?";
   NSDictionary *parameters = @{@"lang":@"en-US",
                                @"maxAlternatives":@30,
-                               @"client":APICLIENT,
-                               @"key":APIKEY,
+                               @"key":API_KEY,
                                @"output":@"json"};
   NSString *path = [service stringByAppendingString:[parameters gcp_URLQueryString]];
   NSURL *URL = [NSURL URLWithString:path];
