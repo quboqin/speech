@@ -47,8 +47,7 @@ This app demonstrates how to make nonstreaming HTTP connections to the [Cloud Sp
 
 - Press the `Process Recorded Audio` button. This causes the `processAudio:` method to construct an HTTP request which it sends to the Speech API endpoint. Notice the options passed as query parameters and in the Content-Type header. When the API call returns, the results are displayed in the scrollable text area at the bottom of the screen.
 
-[vision-zip]: https://github.com/GoogleCloudPlatform/cloud-vision/archive/master.zip
-[getting-started]: https://cloud.google.com/vision/docs/getting-started
+[getting-started]: https://cloud.google.com/speech/docs/getting-started
 [cloud-console]: https://console.cloud.google.com
 [git]: https://git-scm.com/
 [xcode]: https://developer.apple.com/xcode/
