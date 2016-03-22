@@ -1,6 +1,6 @@
-# Cloud Speech Nonstreaming HTTP Objective-C Sample
+# Cloud Speech Nonstreaming REST Objective-C Sample
 
-This app demonstrates how to make nonstreaming HTTP connections to the [Cloud Speech API](https://cloud.google.com/speech/) to recognize speech in recorded audio.
+This app demonstrates how to make nonstreaming REST connections to the [Cloud Speech API](https://cloud.google.com/speech/) to recognize speech in recorded audio.
 
 ## Prerequisites
 - An API key for the Cloud Speech API (See
