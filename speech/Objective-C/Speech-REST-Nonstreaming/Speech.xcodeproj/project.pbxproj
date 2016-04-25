@@ -13,7 +13,6 @@
 		D3334D3B1C8BA97A001C98F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3334D391C8BA97A001C98F7 /* Main.storyboard */; };
 		D3334D3D1C8BA97A001C98F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3334D3C1C8BA97A001C98F7 /* Assets.xcassets */; };
 		D3334D401C8BA97A001C98F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3334D3E1C8BA97A001C98F7 /* LaunchScreen.storyboard */; };
-		D3334D4F1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = D3334D4E1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +26,6 @@
 		D3334D3C1C8BA97A001C98F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3334D3F1C8BA97A001C98F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3334D411C8BA97A001C98F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D3334D4D1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GCPNSObject+HTTPHelpers.h"; sourceTree = "<group>"; };
-		D3334D4E1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GCPNSObject+HTTPHelpers.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +61,6 @@
 				D3334D331C8BA97A001C98F7 /* AppDelegate.h */,
 				D3334D341C8BA97A001C98F7 /* AppDelegate.m */,
 				D3334D3C1C8BA97A001C98F7 /* Assets.xcassets */,
-				D3334D4D1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.h */,
-				D3334D4E1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.m */,
 				D3334D411C8BA97A001C98F7 /* Info.plist */,
 				D3334D3E1C8BA97A001C98F7 /* LaunchScreen.storyboard */,
 				D3334D391C8BA97A001C98F7 /* Main.storyboard */,
@@ -155,7 +150,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3334D381C8BA97A001C98F7 /* ViewController.m in Sources */,
-				D3334D4F1C8BC0B5001C98F7 /* GCPNSObject+HTTPHelpers.m in Sources */,
 				D3334D351C8BA97A001C98F7 /* AppDelegate.m in Sources */,
 				D3334D321C8BA97A001C98F7 /* main.m in Sources */,
 			);

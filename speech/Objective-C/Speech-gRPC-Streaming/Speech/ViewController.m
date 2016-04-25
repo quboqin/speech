@@ -17,8 +17,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "ViewController.h"
-#import "SpeechRecognitionService.h"
 #import "AudioController.h"
+#import "SpeechRecognitionService.h"
+#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
 @interface ViewController () <AudioControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITextView *textView;
@@ -44,9 +45,7 @@
 
 - (IBAction)stopAudio:(id)sender {
   [[AudioController sharedInstance] stop];
-  [[SpeechRecognitionService sharedInstance] stopStreamingWithCompletion:^(id object) {
-    NSLog(@"FINISHED STREAMING");
-  }];
+  [[SpeechRecognitionService sharedInstance] stopStreaming];
 }
 
 - (void) processSampleData:(NSData *)data
@@ -63,9 +62,26 @@
   if ([self.audioData length] > 16384) {
     NSLog(@"SENDING");
     [[SpeechRecognitionService sharedInstance] streamAudioData:self.audioData
-                                                withCompletion:^(id object) {
-                                                  if (object) {
-                                                    _textView.text = [object description];
+                                                withCompletion:^(RecognizeResponse *response, NSError *error) {
+                                                  if (response) {
+                                                    BOOL finished = NO;
+                                                    NSLog(@"RESPONSE RECEIVED");
+                                                    if (error) {
+                                                      NSLog(@"ERROR: %@", error);
+                                                    } else {
+                                                      NSLog(@"RESPONSE: %@", response);
+                                                      for (SpeechRecognitionResult *result in response.resultsArray) {
+                                                        if (result.isFinal) {
+                                                          finished = YES;
+                                                        }
+                                                      }
+                                                      _textView.text = [response description];
+                                                    }
+                                                    if (finished) {
+                                                      [self stopAudio:nil];
+                                                    }
+                                                  } else {
+                                                    [self stopAudio:nil];
                                                   }
                                                 }];
     self.audioData = [[NSMutableData alloc] init];

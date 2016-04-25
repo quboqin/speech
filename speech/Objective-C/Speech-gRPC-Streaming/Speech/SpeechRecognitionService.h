@@ -15,8 +15,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
-typedef void (^SpeechRecognitionCompletionHandler)(id object);
+typedef void (^SpeechRecognitionCompletionHandler)(RecognizeResponse *object, NSError *error);
 
 @interface SpeechRecognitionService : NSObject
 
@@ -25,7 +26,7 @@ typedef void (^SpeechRecognitionCompletionHandler)(id object);
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion;
 
-- (void) stopStreamingWithCompletion:(SpeechRecognitionCompletionHandler)completion;
+- (void) stopStreaming;
 
 - (BOOL) isStreaming;
 

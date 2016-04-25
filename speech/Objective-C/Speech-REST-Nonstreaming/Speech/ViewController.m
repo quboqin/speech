@@ -16,9 +16,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "ViewController.h"
-#import "GCPNSObject+HTTPHelpers.h"
 
 #define API_KEY @"YOUR_API_KEY"
+
+#define SAMPLE_RATE 16000
 
 @interface ViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
@@ -44,7 +45,7 @@
   NSDictionary *recordSettings = @{AVEncoderAudioQualityKey:@(AVAudioQualityMax),
                                    AVEncoderBitRateKey: @16,
                                    AVNumberOfChannelsKey: @1,
-                                   AVSampleRateKey: @8000.0f};
+                                   AVSampleRateKey: @(SAMPLE_RATE)};
   NSError *error;
   _audioRecorder = [[AVAudioRecorder alloc]
                     initWithURL:soundFileURL
@@ -90,18 +91,29 @@
 - (IBAction) processAudio:(id) sender {
   [self stopAudio:sender];
 
+  NSString *service = @"https:/speech.googleapis.com/v1/speech:recognize";
+  service = [service stringByAppendingString:@"?key="];
+  service = [service stringByAppendingString:API_KEY];
+
   NSData *audioData = [NSData dataWithContentsOfFile:[self soundFilePath]];
-  NSString *service = @"https://www.google.com/speech-api/v2/recognize?";
-  NSDictionary *parameters = @{@"lang":@"en-US",
-                               @"maxAlternatives":@30,
-                               @"key":API_KEY,
-                               @"output":@"json"};
-  NSString *path = [service stringByAppendingString:[parameters gcp_URLQueryString]];
+  NSDictionary *initialRequest = @{@"encoding":@"LINEAR16",
+                                   @"sampleRate":@(SAMPLE_RATE),
+                                   @"languageCode":@"en-US",
+                                   @"maxAlternatives":@30};
+  NSDictionary *audioRequest = @{@"content":[audioData base64EncodedStringWithOptions:0]};
+  NSDictionary *requestDictionary = @{@"initialRequest":initialRequest,
+                                      @"audioRequest":audioRequest};
+  NSError *error;
+  NSData *requestData = [NSJSONSerialization dataWithJSONObject:requestDictionary
+                                                        options:0
+                                                          error:&error];
+
+  NSString *path = service;
   NSURL *URL = [NSURL URLWithString:path];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-  NSString *contentType = @"audio/l16; rate=8000";
+  NSString *contentType = @"application/json";
   [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-  [request setHTTPBody:audioData];
+  [request setHTTPBody:requestData];
   [request setHTTPMethod:@"POST"];
 
   NSURLSessionTask *task =

@@ -39,7 +39,7 @@
 
   InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
   initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-  initialRecognizeRequest.sampleRate = 8000;
+  initialRecognizeRequest.sampleRate = 16000;
   initialRecognizeRequest.languageCode = @"en-US";
   initialRecognizeRequest.maxAlternatives = 30;
 

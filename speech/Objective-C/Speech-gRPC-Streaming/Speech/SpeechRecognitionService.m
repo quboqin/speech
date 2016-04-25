@@ -16,7 +16,6 @@
 
 #import "SpeechRecognitionService.h"
 
-#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 #import <GRPCClient/GRPCCall.h>
 #import <RxLibrary/GRXBufferedPipe.h>
 #import <ProtoRPC/ProtoRPC.h>
@@ -53,21 +52,7 @@
     _writer = [[GRXBufferedPipe alloc] init];
     _call = [_client RPCToRecognizeWithRequestsWriter:_writer
                                          eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
-                                           NSLog(@"RESPONSE RECEIVED");
-                                           if (error) {
-                                             NSLog(@"ERROR: %@", error);
-                                           } else {
-                                             NSLog(@"RESPONSE");
-                                             for (SpeechRecognitionResult *result in response.resultsArray) {
-                                               NSLog(@"RESULT");
-                                               for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
-                                                 NSLog(@"ALTERNATIVE %0.4f %@",
-                                                       alternative.confidence,
-                                                       alternative.transcript);
-                                               }
-                                             }
-                                             completion(response);
-                                           }
+                                           completion(response, error);
                                          }];
     _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
     NSLog(@"HEADERS: %@", _call.requestHeaders);
@@ -77,9 +62,12 @@
 
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-    initialRecognizeRequest.sampleRate = 8000;
+    initialRecognizeRequest.sampleRate = 16000;
     initialRecognizeRequest.languageCode = @"en-US";
     initialRecognizeRequest.maxAlternatives = 30;
+    initialRecognizeRequest.continuous = YES;
+    initialRecognizeRequest.interimResults = YES;
+    initialRecognizeRequest.enableEndpointerEvents = YES;
     request.initialRequest = initialRecognizeRequest;
   }
 
@@ -90,10 +78,12 @@
   [_writer writeValue:request];
 }
 
-- (void) stopStreamingWithCompletion:(SpeechRecognitionCompletionHandler)completion {
+- (void) stopStreaming {
+  if (!_streaming) {
+    return;
+  }
   [_writer finishWithError:nil];
   _streaming = NO;
-  completion(nil);
 }
 
 - (BOOL) isStreaming {
