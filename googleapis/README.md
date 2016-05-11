@@ -1,5 +1,7 @@
-# Google API Proto definitions
+# Google Protocol Buffer and API definitions
 
-This directory contains proto definitions for Google APIs used in these samples.For the definitive set of proto definitions, please see [the GoogleAPIs git repository](http://github.com/googleapis/googleapis).
+This directory contains **proto** files that describe Google APIs that are used in these samples and a **podspec** that allows supporting code to be built with Cocoapods.
 
+Proto files are copied from the definitive set in [the GoogleAPIs repository](http://github.com/googleapis/googleapis).
 
+To learn more about protocol buffers and the proto file format, see [Google's Protocol Buffer documentation](https://developers.google.com/protocol-buffers/).
