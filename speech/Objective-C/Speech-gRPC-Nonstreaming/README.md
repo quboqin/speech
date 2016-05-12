@@ -7,8 +7,8 @@ This app demonstrates how to make nonstreaming gRPC connections to the [Cloud Sp
   [the docs][getting-started] to learn more)
 - An OSX machine or emulator
 - [Xcode 7][xcode]
-- [Cocoapods][cocoapods]
-- protoc installed as described in the [gRPC Objective-C setup].
+- [Cocoapods][cocoapods] version 1.0 or later
+- protoc installed as described in the [gRPC Objective-C setup]
 
 ## Quickstart
 - Clone this repo and `cd` into this directory.
