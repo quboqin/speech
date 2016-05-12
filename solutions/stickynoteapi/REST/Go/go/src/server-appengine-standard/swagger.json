@@ -1,0 +1,62 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A simple example.",
+    "title": "Stickynote API",
+    "version": "1.0.0"
+  },
+  "host": "stickynoteapi.example.com",
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/stickynote": {
+      "get": {
+        "description": "Get a stickynote displaying a specified message.",
+        "operationId": "getStickyNote",
+        "parameters": [
+          {
+            "description": "Message to display.",
+            "format": "string",
+            "in": "query",
+            "name": "message",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "image/png"
+        ],
+        "responses": {
+          "200": {
+            "description": "A stickynote image.",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "in": "query",
+      "name": "key",
+      "type": "apiKey"
+    }
+  }
+}

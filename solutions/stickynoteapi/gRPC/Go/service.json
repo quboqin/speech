@@ -1,0 +1,492 @@
+{
+  "apis": [
+    {
+      "name": "messagepb.StickyNote",
+      "methods": [
+        {
+          "name": "Get",
+          "requestTypeUrl": "type.googleapis.com/StickyNoteRequest",
+          "responseTypeUrl": "type.googleapis.com/StickyNoteResponse"
+        },
+        {
+          "name": "Update",
+          "requestTypeUrl": "type.googleapis.com/StickyNoteRequest",
+	  "requestStreaming": true,
+          "responseTypeUrl": "type.googleapis.com/StickyNoteResponse",
+	  "responseStreaming": true
+        }
+      ],
+      "sourceContext": {},
+      "version": "v1"
+    }
+  ],
+  "authentication": {},
+  "backend": {
+    "rules": [
+      {
+        "selector": "messagepb.StickyNote.Get",
+        "address": "127.0.0.1:8080"
+      },
+      {
+        "selector": "messagepb.StickyNote.Update",
+        "address": "127.0.0.1:8080"
+      }
+    ]
+  },
+  "configVersion": 3,
+  "context": {},
+  "control": {
+    "environment": "endpoints-servicecontrol.sandbox.googleapis.com"
+  },
+  "customError": {},
+  "discovery": {
+    "apiName": "stickynote",
+    "discoveryPerVersion": [
+      {
+        "apiName": "stickynote",
+        "supportedSchemas": [
+          "GOOGLE_REST"
+        ],
+        "version": "v1"
+      }
+    ],
+    "supportedSchemas": [
+      "GOOGLE_REST"
+    ]
+  },
+  "documentation": {},
+  "endpoints": [
+    {
+      "apis": [
+        ""
+      ],
+      "features": [
+        "googleapis.com/endpoint/grpc-autobahn"
+      ],
+      "name": "stickynoteapi.appspot.com"
+    }
+  ],
+  "enums": [
+    {
+      "enumvalue": [
+        {
+          "name": "NULL_VALUE"
+        }
+      ],
+      "name": "google.protobuf.NullValue",
+      "sourceContext": {
+        "fileName": "struct.proto"
+      }
+    }
+  ],
+  "experimental": {
+    "advanced": {
+      "chemistConfig": {
+        "address": "gslb:/endpoints-servicecontrol"
+      }
+    }
+  },
+  "features": [
+    "googleprod.com/service/use-monarch"
+  ],
+  "http": {
+    "rules": [
+      {
+        "get": "/stickynote",
+        "selector": "messagepb.StickyNote.Get"
+      }
+    ]
+  },
+  "legacy": {
+    "apiV1Name": "stickynoteapi.appspot.com"
+  },
+  "logging": {
+    "producerDestinations": [
+      {
+        "logs": [
+          "endpoints_log"
+        ],
+        "monitoredResource": "endpoints.googleapis.com/api"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "name": "endpoints_log"
+    }
+  ],
+  "metrics": [
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/error_type"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/error_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/error_type"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/error_count",
+      "valueType": "INT64"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/end_user"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/top_request_count_by_end_user",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/end_user_country"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/top_request_count_by_end_user_country",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/referer"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/top_request_count_by_referer",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/consumer_id"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/top_request_count_by_consumer",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/quota_group_name"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/quota_group_name"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/quota_billable_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_overhead_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/backend_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/backend_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/consumer_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/top_request_sizes_by_consumer",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/consumer_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/top_response_sizes_by_consumer",
+      "valueType": "DISTRIBUTION"
+    }
+  ],
+  "monitoredResources": [
+    {
+      "labels": [
+        {
+          "key": "cloud.googleapis.com/location"
+        },
+        {
+          "key": "cloud.googleapis.com/uid"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_version"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_method"
+        },
+        {
+          "key": "cloud.googleapis.com/project"
+        },
+        {
+          "key": "cloud.googleapis.com/service"
+        }
+      ],
+      "type": "endpoints.googleapis.com/api"
+    }
+  ],
+  "monitoring": {
+    "consumerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/consumer/request_count",
+          "serviceruntime.googleapis.com/api/consumer/error_count",
+          "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+          "serviceruntime.googleapis.com/api/consumer/total_latencies",
+          "serviceruntime.googleapis.com/api/consumer/request_overhead_latencies",
+          "serviceruntime.googleapis.com/api/consumer/backend_latencies",
+          "serviceruntime.googleapis.com/api/consumer/request_sizes",
+          "serviceruntime.googleapis.com/api/consumer/response_sizes",
+          "serviceruntime.googleapis.com/api/consumer/top_request_count_by_end_user",
+          "serviceruntime.googleapis.com/api/consumer/top_request_count_by_end_user_country",
+          "serviceruntime.googleapis.com/api/consumer/top_request_count_by_referer"
+        ],
+        "monitoredResource": "endpoints.googleapis.com/api"
+      }
+    ],
+    "producerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/producer/request_count",
+          "serviceruntime.googleapis.com/api/producer/error_count",
+          "serviceruntime.googleapis.com/api/producer/total_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+          "serviceruntime.googleapis.com/api/producer/backend_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_sizes",
+          "serviceruntime.googleapis.com/api/producer/response_sizes",
+          "serviceruntime.googleapis.com/api/producer/top_request_count_by_consumer",
+          "serviceruntime.googleapis.com/api/producer/top_request_sizes_by_consumer",
+          "serviceruntime.googleapis.com/api/producer/top_response_sizes_by_consumer"
+        ],
+        "monitoredResource": "endpoints.googleapis.com/api"
+      }
+    ]
+  },
+  "name": "stickynoteapi.appspot.com",
+  "quota": {},
+  "system_parameters": {
+    "rules": [
+      {
+        "selector": "messagepb.StickyNote.Get",
+        "parameters": [
+          {
+            "name": "api_key",
+            "http_header": "x-api-key"
+          }
+        ]
+      },
+      {
+        "selector": "messagepb.StickyNote.Update",
+        "parameters": [
+          {
+            "name": "api_key",
+            "http_header": "x-api-key"
+          }
+        ]
+      }
+    ]
+  },
+  "title": "StickyNotes (GRPC)",
+  "types": [
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "message",
+          "kind": "TYPE_STRING",
+          "name": "message",
+          "number": 1
+        }
+      ],
+      "name": "StickyNoteRequest",
+      "sourceContext": {
+        "fileName": "stickynote.proto"
+      }
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "image",
+          "kind": "TYPE_BYTES",
+          "name": "image",
+          "number": 1
+        }
+      ],
+      "name": "StickyNoteResponse",
+      "sourceContext": {
+        "fileName": "stickynote.proto"
+      }
+    }
+  ],
+  "usage": {
+    "rules": [
+      {
+        "allowUnregisteredCalls": true,
+        "selector": "messagepb.StickyNote.Get"
+      },
+      {
+        "allowUnregisteredCalls": true,
+        "selector": "messagepb.StickyNote.Update"
+      }
+    ]
+  },
+  "visibility": {}
+}

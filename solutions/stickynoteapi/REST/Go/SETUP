@@ -1,0 +1,31 @@
+#!/bin/sh
+
+echo "1. Set gopath and search path"
+
+export GOPATH=`pwd`/go
+export PATH=$GOPATH/bin:$PATH
+
+echo "2. Get the server and client dependencies"
+
+go get server
+go get client
+
+echo "3. Build the server and client"
+
+go build server
+go build client
+
+echo "4. Stop any previously-running instances of the server"
+
+killall server
+
+echo "5. Start the server"
+
+./server &
+
+echo "6. Run the client"
+
+sleep 1 # give the server some time to start
+./client "Remember the milk."
+
+echo "7. Open the image in message.png"
