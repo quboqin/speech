@@ -23,8 +23,9 @@
 
 #import <ProtoRPC/ProtoRPC.h>
 
-static NSString * const kHostAddress
-= @"localhost";
+// [START host]
+static NSString * const kHostAddress = @"localhost";
+// [END host]
 // = @"<IP Address>"; // GCE instance
 // = @"<IP Address>"; // L4 load balancer
 
@@ -80,6 +81,7 @@ static BOOL useSSL = YES;
   [call start];
 }
 
+// [START openStreamingConnection]
 - (void) openStreamingConnection {
   _writer = [[GRXBufferedPipe alloc] init];
   _updateCall = [_client RPCToUpdateWithRequestsWriter:_writer
@@ -88,6 +90,7 @@ static BOOL useSSL = YES;
                                           }];
   [_updateCall start];
 }
+// [END openStreamingConnection]
 
 - (void) closeStreamingConnection {
   [_writer writesFinishedWithError:nil];
@@ -110,6 +113,7 @@ static BOOL useSSL = YES;
   [self getStickynoteWithMessage:textField.text];
 }
 
+// [START textDidChange]
 - (IBAction)textDidChange:(UITextField *) sender {
   if ([_streamSwitch isOn]) {
     StickyNoteRequest *request = [StickyNoteRequest message];
@@ -117,6 +121,7 @@ static BOOL useSSL = YES;
     [_writer writeValue:request];
   }
 }
+// [END textDidChange]
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [textField resignFirstResponder];

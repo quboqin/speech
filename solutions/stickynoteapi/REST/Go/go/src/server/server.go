@@ -18,6 +18,7 @@ import (
 	"net/http"
 )
 
+// [START handler]
 func handler(w http.ResponseWriter, r *http.Request) {
 	var sticky Sticky
 	sticky.Message = r.FormValue("message")
@@ -27,9 +28,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.Write(*stickyBytes)
 	}
 }
+// [END handler]
 
+// [START main]
 func main() {
 	http.HandleFunc("/stickynote", handler)
 	http.ListenAndServe(":8080", nil)
 	//http.ListenAndServeTLS(":443", "ssl.crt", "ssl.key", nil)
 }
+// [END main]

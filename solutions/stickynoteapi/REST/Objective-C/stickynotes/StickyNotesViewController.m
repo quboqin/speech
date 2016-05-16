@@ -38,7 +38,9 @@
 
 @end
 
+// [START host]
 static NSString * const kHostAddress = @"localhost:8080";
+// [END host]
 
 @interface StickyNotesViewController () <UITextFieldDelegate>
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
@@ -50,6 +52,7 @@ static NSString * const kHostAddress = @"localhost:8080";
 
 @implementation StickyNotesViewController
 
+// [START textFieldDidEndEditing]
 - (IBAction) textFieldDidEndEditing:(UITextField *)textField
 {
   NSString *queryString = [NSString stringWithFormat:@"http://%@/stickynote?message=%@",
@@ -69,6 +72,7 @@ static NSString * const kHostAddress = @"localhost:8080";
            }];
   [_task resume];
 }
+// [END textFieldDidEndEditing]
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [textField resignFirstResponder];

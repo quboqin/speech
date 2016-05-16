@@ -29,8 +29,13 @@ const (
 	useSSL = false
 )
 
+// [START stickynoteserver]
 type StickyNoteServer struct{}
 
+var stickyNoteServer StickyNoteServer
+// [END stickynoteserver]
+
+// [START get]
 func (s *StickyNoteServer) Get(ctx context.Context, r *pb.StickyNoteRequest) (*pb.StickyNoteResponse, error) {
 	var sticky Sticky
 	sticky.Message = r.Message
@@ -42,6 +47,7 @@ func (s *StickyNoteServer) Get(ctx context.Context, r *pb.StickyNoteRequest) (*p
 
 	return resp, err
 }
+// [END get]
 
 func (s *StickyNoteServer) Update(stream pb.StickyNote_UpdateServer) error {
 	for {
@@ -68,8 +74,7 @@ func (s *StickyNoteServer) Update(stream pb.StickyNote_UpdateServer) error {
 	return nil
 }
 
-var stickyNoteServer StickyNoteServer
-
+// [START main]
 func main() {
 	var err error
 	var lis net.Listener
@@ -93,3 +98,4 @@ func main() {
 	pb.RegisterStickyNoteServer(grpcServer, &stickyNoteServer)
 	grpcServer.Serve(lis)
 }
+// [END main]
