@@ -11,8 +11,11 @@ an API work together.
 ### [REST](REST)
 
 Clients and servers for a REST version of the Sticky Note API.
+For a complete description, please see
+[Build a mobile app using Google Compute Engine and REST](https://cloud.google.com/solutions/mobile/mobile-compute-engine-rest).
 
 ### [gRPC](gRPC)
 
 Clients and servers for a gRPC version of the Sticky Note API.
-
+For a complete description, please see
+[Build a mobile app using Google Compute Engine and gRPC](https://cloud.google.com/solutions/mobile/mobile-compute-engine-grpc).
