@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
     ms.source_files = "google/**/*.pbobjc.{h,m}"
     ms.header_mappings_dir = "."
     ms.requires_arc = false
-    ms.dependency "Protobuf", "~> 3.0.0-alpha-4"
+    ms.dependency "Protobuf", "= 3.0.0-beta-2"
   end
 
   # The --objcgrpc_out plugin generates a pair of .pbrpc.h/.pbrpc.m files for each .proto file with
