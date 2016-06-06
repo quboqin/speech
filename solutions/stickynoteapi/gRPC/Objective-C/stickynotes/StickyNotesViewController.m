@@ -29,7 +29,7 @@ static NSString * const kHostAddress = @"localhost";
 // = @"<IP Address>"; // GCE instance
 // = @"<IP Address>"; // L4 load balancer
 
-static BOOL useSSL = YES;
+static BOOL useSSL = NO;
 
 @interface StickyNotesViewController () <UITextFieldDelegate>
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
