@@ -1,7 +1,12 @@
 Pod::Spec.new do |s|
   s.name     = 'stickynote'
   s.version  = '0.0.1'
-  s.license  = '...'
+  s.license  = 'Apache 2.0'
+  s.authors  = { 'Google Inc.' => 'timburks@google.com'}
+  s.homepage = 'http://github.com/GoogleCloudPlatform/ios-docs-samples'
+  s.source   = { :git => 'https://github.com/GoogleCloudPlatform/ios-docs-samples.git',
+                 :tag => '0.0.1' }
+  s.summary  = 'Stickynote Sample API'	  
 
   s.ios.deployment_target = '7.1'
   s.osx.deployment_target = '10.9'
@@ -15,7 +20,7 @@ Pod::Spec.new do |s|
     ms.source_files = "*.pbobjc.{h,m}"
     ms.header_mappings_dir = "."
     ms.requires_arc = false
-    ms.dependency "Protobuf", "~> 3.0.0-alpha-4"
+    ms.dependency "Protobuf", "= 3.0.0-beta-2"
   end
 
   # The --objcgrpc_out plugin generates a pair of .pbrpc.h/.pbrpc.m files for each .proto file with
