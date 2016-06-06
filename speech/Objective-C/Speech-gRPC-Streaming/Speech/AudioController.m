@@ -120,7 +120,7 @@ static OSStatus playbackCallback(void *inRefCon,
   return status;
 }
 
-- (OSStatus) prepare {
+- (OSStatus) prepareWithSampleRate:(double) specifiedSampleRate {
   OSStatus status = noErr;
 
   AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -141,8 +141,8 @@ static OSStatus playbackCallback(void *inRefCon,
   [session setPreferredIOBufferDuration:10 error:&error];
 
   double sampleRate = session.sampleRate;
-  NSLog (@"hardwareSampleRate = %f", sampleRate);
-  sampleRate = 16000;
+  NSLog (@"hardware sample rate = %f, using specified rate = %f", sampleRate, specifiedSampleRate);
+  sampleRate = specifiedSampleRate;
 
   // Describe the RemoteIO unit
   AudioComponentDescription audioComponentDescription;

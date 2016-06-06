@@ -21,6 +21,8 @@
 #import "SpeechRecognitionService.h"
 #import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
+#define SAMPLE_RATE 16000.0f
+
 @interface ViewController () <AudioControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITextView *textView;
 @property (nonatomic, strong) NSMutableData *audioData;
@@ -39,7 +41,8 @@
   [audioSession setCategory:AVAudioSessionCategoryRecord error:nil];
 
   _audioData = [[NSMutableData alloc] init];
-  [[AudioController sharedInstance] prepare];
+  [[AudioController sharedInstance] prepareWithSampleRate:SAMPLE_RATE];
+  [[SpeechRecognitionService sharedInstance] setSampleRate:SAMPLE_RATE];
   [[AudioController sharedInstance] start];
 }
 

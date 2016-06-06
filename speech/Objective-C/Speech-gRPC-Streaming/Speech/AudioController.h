@@ -28,7 +28,7 @@
 
 @property (nonatomic, weak) id<AudioControllerDelegate> delegate;
 
-- (OSStatus) prepare;
+- (OSStatus) prepareWithSampleRate:(double) sampleRate;
 - (OSStatus) start;
 - (OSStatus) stop;
 

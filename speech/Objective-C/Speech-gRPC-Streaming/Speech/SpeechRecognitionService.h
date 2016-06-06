@@ -30,4 +30,6 @@ typedef void (^SpeechRecognitionCompletionHandler)(RecognizeResponse *object, NS
 
 - (BOOL) isStreaming;
 
+@property (nonatomic, assign) double sampleRate;
+
 @end

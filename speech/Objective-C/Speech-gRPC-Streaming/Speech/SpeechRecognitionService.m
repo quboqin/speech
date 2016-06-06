@@ -38,6 +38,7 @@
   static SpeechRecognitionService *instance = nil;
   if (!instance) {
     instance = [[self alloc] init];
+    instance.sampleRate = 16000.0; // default value
   }
   return instance;
 }
@@ -62,7 +63,7 @@
 
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-    initialRecognizeRequest.sampleRate = 16000;
+    initialRecognizeRequest.sampleRate = self.sampleRate;
     initialRecognizeRequest.languageCode = @"en-US";
     initialRecognizeRequest.maxAlternatives = 30;
     initialRecognizeRequest.continuous = YES;
