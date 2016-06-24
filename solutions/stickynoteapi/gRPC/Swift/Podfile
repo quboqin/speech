@@ -1,0 +1,24 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '8.0'
+# Uncomment this line if you're using Swift
+use_frameworks!
+
+platform :ios, '9.0'
+
+fix_repo = 'https://github.com/jcanizales/grpc.git'
+fix_branch = 'support-dynamic-frameworks'
+
+target 'stickynotes' do
+
+  pod 'Protobuf'
+  pod 'BoringSSL', :podspec => "https://github.com/jcanizales/grpc/raw/#{fix_branch}/src/objective-c/BoringSSL.podspec"
+
+  pod 'gRPC', :git => "#{fix_repo}", :branch => "#{fix_branch}"
+  pod 'gRPC-Core', :git => "#{fix_repo}", :branch => "#{fix_branch}", :submodules => true
+  pod 'gRPC-RxLibrary', :git => "#{fix_repo}", :branch => "#{fix_branch}"
+  pod 'gRPC-ProtoRPC', :git => "#{fix_repo}", :branch => "#{fix_branch}"
+
+  pod 'stickynote', :path => 'stickyapi'
+
+end
+

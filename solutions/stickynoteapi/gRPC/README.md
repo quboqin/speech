@@ -10,6 +10,10 @@ For a complete description, please see
 
 An Objective-C client.
 
+### [Swift](Swift)
+
+A Swift client.
+
 ### [Go](Go)
 
 A Go server and test client.

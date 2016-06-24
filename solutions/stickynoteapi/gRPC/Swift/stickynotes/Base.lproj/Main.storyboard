@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sticky Notes View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="StickyNotesViewController" customModule="stickynotes" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your message here." adjustsFontSizeToFit="NO" minimumFontSize="26" translatesAutoresizingMaskIntoConstraints="NO" id="Bc0-tV-uN6">
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textDidChangeWithTextField:" destination="BYZ-38-t0r" eventType="editingChanged" id="eKg-Sk-3M4"/>
+                                    <action selector="textFieldDidEndEditing:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="GNW-bt-k8k"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="GKP-G1-8DJ"/>
+                                </connections>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3JV-ON-lU7">
+                                <color key="backgroundColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="LP3-me-9ag"/>
+                                    <constraint firstAttribute="width" constant="300" id="RGa-Fn-IUV"/>
+                                </constraints>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VGW-9e-P1O">
+                                <connections>
+                                    <action selector="switchValueDidChangeWithSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="i8e-vQ-7Fc"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="VGW-9e-P1O" firstAttribute="top" secondItem="3JV-ON-lU7" secondAttribute="bottom" constant="40" id="HvS-Mo-C6k"/>
+                            <constraint firstItem="Bc0-tV-uN6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JUt-rE-ffE"/>
+                            <constraint firstItem="3JV-ON-lU7" firstAttribute="top" secondItem="Bc0-tV-uN6" secondAttribute="bottom" constant="40" id="Qyt-ZB-ZID"/>
+                            <constraint firstItem="Bc0-tV-uN6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="27" id="b2k-A2-ncz"/>
+                            <constraint firstItem="3JV-ON-lU7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l54-MV-f63"/>
+                            <constraint firstItem="Bc0-tV-uN6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="mCG-Io-SJY"/>
+                            <constraint firstItem="VGW-9e-P1O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rMO-4e-TIR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bc0-tV-uN6" secondAttribute="trailing" constant="20" id="rlm-x0-F3X"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="3JV-ON-lU7" id="9zu-9h-sbc"/>
+                        <outlet property="streamSwitch" destination="VGW-9e-P1O" id="qio-wl-ftA"/>
+                        <outlet property="textField" destination="Bc0-tV-uN6" id="vDM-Hz-eqM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="341"/>
+        </scene>
+    </scenes>
+</document>
