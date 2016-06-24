@@ -19,77 +19,87 @@ let hostAddress = "localhost"
 let useSSL = false
 
 class StickyNotesViewController: UIViewController, UITextFieldDelegate {
-  @IBOutlet weak var imageView: UIImageView?
-  @IBOutlet weak var textField: UITextField?
-  @IBOutlet weak var streamSwitch: UISwitch?
-  var addressWithPort: String?
-  var updateCall: ProtoRPC?
-  var writer: GRXBufferedPipe?
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var textField: UITextField!
+  @IBOutlet weak var streamSwitch: UISwitch!
   var client: StickyNote?
+  var updateCall: ProtoRPC?
+  var updateWriter: GRXBufferedPipe?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = UIColor.darkGray()
-    self.configureNetworking()
+    view.backgroundColor = UIColor.darkGray()
+    configureNetworking()
   }
 
   func configureNetworking() {
+    var addressWithPort: String
     if (!useSSL) {
-      self.addressWithPort = hostAddress + ":8080"
+      addressWithPort = hostAddress + ":8080"
       // This tells the GRPC library to NOT use SSL.
-      GRPCCall.useInsecureConnections(forHost: self.addressWithPort)
+      GRPCCall.useInsecureConnections(forHost: addressWithPort)
     } else {
-      self.addressWithPort = hostAddress + ":443"
+      addressWithPort = hostAddress + ":443"
       // This tells the GRPC library to trust a certificate that it might not be able to validate.
       // Typically this would be used to trust a self-signed certificate.
-      let certificateFilePath = Bundle.main().pathForResource("ssl", ofType: "crt")
-      GRPCCall.useTestCertsPath(certificateFilePath, testName: "example.com", forHost: hostAddress)
+      if let certificateFilePath = Bundle.main().pathForResource("ssl", ofType: "crt") {
+        GRPCCall.useTestCertsPath(certificateFilePath, testName: "example.com", forHost: hostAddress)
+      }
     }
-    self.client = StickyNote.init(host: self.addressWithPort!)
+    client = StickyNote(host: addressWithPort)
   }
 
   @IBAction func textFieldDidEndEditing(_ textField: UITextField) {
-    self.getStickynote(message: textField.text!)
+    getStickynote(message: textField.text!)
   }
 
-  func handleStickynoteResponse(response: StickyNoteResponse!, error: NSError!) {
-      if (error != nil) {
-        self.imageView!.backgroundColor = UIColor.red()
-        self.imageView!.image = nil;
-      } else if (response != nil) {
-        self.imageView!.image = UIImage(data: response!.image);
-      }
+  func handleStickynoteResponse(response: StickyNoteResponse?, error: NSError?) {
+    if (error != nil) {
+      imageView.backgroundColor = UIColor.red()
+      imageView.image = nil;
+    } else if let response = response {
+      imageView.image = UIImage(data: response.image);
+    }
   }
 
   func getStickynote(message: String) {
-    let request = StickyNoteRequest.init()
-    request.message = message
-    let call = self.client?.rpcToGet(with: request, handler: { (response, error) in
-      self.handleStickynoteResponse(response: response, error: error)
-    })
-    call!.start()
+    if let client = client {
+      let request = StickyNoteRequest()
+      request.message = message
+      let call = client.rpcToGet(with: request, handler: { (response, error) in
+        self.handleStickynoteResponse(response: response, error: error)
+      })
+      call.start()
+    }
   }
 
   // [START openStreamingConnection]
   func openStreamingConnection() {
-    self.writer = GRXBufferedPipe()
-    self.updateCall = self.client?.rpcToUpdate(withRequestsWriter: self.writer!, eventHandler: { (done, response, error) in
-      self.handleStickynoteResponse(response: response, error: error)
-    })
-    self.updateCall!.start()
+    if let client = client {
+      updateWriter = GRXBufferedPipe()
+      if let updateWriter = updateWriter {
+        updateCall = client.rpcToUpdate(withRequestsWriter: updateWriter,
+                                        eventHandler: { (done, response, error) in
+                                          self.handleStickynoteResponse(response: response, error: error)
+        })
+        if let updateCall = updateCall {
+          updateCall.start()
+        }
+      }
+    }
   }
   // [END openStreamingConnection]
 
   func closeStreamingConnection() {
-    self.writer!.writesFinishedWithError(nil)
+    updateWriter?.writesFinishedWithError(nil)
   }
 
   // [START textDidChange]
   @IBAction func textDidChange(textField: UITextField) {
-    if (self.streamSwitch!.isOn) {
+    if (streamSwitch.isOn) {
       let request = StickyNoteRequest()
       request.message = textField.text
-      self.writer!.writeValue(request)
+      updateWriter?.writeValue(request)
     }
   }
   // [END textDidChange]
@@ -101,13 +111,13 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
 
   @IBAction func switchValueDidChange(`switch`: UISwitch) {
     if (`switch`.isOn) {
-      self.openStreamingConnection()
+      openStreamingConnection()
     } else {
-      self.closeStreamingConnection()
+      closeStreamingConnection()
     }
   }
 
   override func preferredStatusBarStyle() -> UIStatusBarStyle {
-   return .lightContent
+    return .lightContent
   }
 }

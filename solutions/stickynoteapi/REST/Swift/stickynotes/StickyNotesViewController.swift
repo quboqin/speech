@@ -19,13 +19,10 @@ let kHostPort = 8080
 
 class StickyNotesViewController: UIViewController, UITextFieldDelegate {
 
-  @IBOutlet weak var imageView: UIImageView?
-  @IBOutlet weak var textField: UITextField?
-  var request: URLRequest?
-  var task: URLSessionDataTask?
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var textField: UITextField!
 
   func textFieldDidEndEditing(_ textField: UITextField) {
-
     let urlComponents = NSURLComponents()
     urlComponents.scheme = "http";
     urlComponents.host = kHostAddress;
@@ -35,24 +32,24 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
     let messageQuery = URLQueryItem(name: "message", value: textField.text)
     urlComponents.queryItems = [messageQuery]
 
-    self.request = URLRequest(url:urlComponents.url!)
-
-    let session = URLSession.shared()
-    self.task = session.dataTask(with: self.request!, completionHandler: {data, response, error in
-      if data == nil {
-        DispatchQueue.main.async(execute: {
-          self.imageView!.backgroundColor = UIColor.red()
-          self.imageView!.image = nil
-        })
-      } else {
-        let image = UIImage.init(data:data!)
-        DispatchQueue.main.async(execute: {
-          self.imageView!.backgroundColor = UIColor.gray()
-          self.imageView!.image = image
-        })
-      }
-    })
-    self.task!.resume()
+    if let url = urlComponents.url {
+      let request = URLRequest(url:url)
+      let session = URLSession.shared()
+      let task = session.dataTask(with: request, completionHandler: {data, response, error in
+        if let data = data {
+          DispatchQueue.main.async(execute: {
+            self.imageView.backgroundColor = UIColor.gray()
+            self.imageView.image = UIImage(data:data)
+          })
+        } else {
+          DispatchQueue.main.async(execute: {
+            self.imageView.backgroundColor = UIColor.red()
+            self.imageView.image = nil
+          })
+        }
+      })
+      task.resume()
+    }
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
