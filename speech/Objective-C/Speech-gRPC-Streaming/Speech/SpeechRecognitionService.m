@@ -28,7 +28,7 @@
 @property (nonatomic, assign) BOOL streaming;
 @property (nonatomic, strong) Speech *client;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
-@property (nonatomic, strong) ProtoRPC *call;
+@property (nonatomic, strong) GRPCProtoCall *call;
 
 @end
 
@@ -46,35 +46,39 @@
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion {
 
-  RecognizeRequest *request = [RecognizeRequest message];
-
   if (!_streaming) {
     _client = [[Speech alloc] initWithHost:HOST];
     _writer = [[GRXBufferedPipe alloc] init];
-    _call = [_client RPCToRecognizeWithRequestsWriter:_writer
-                                         eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
+    _call = [_client RPCToStreamingRecognizeWithRequestsWriter:_writer
+                                         eventHandler:^(BOOL done, StreamingRecognizeResponse *response, NSError *error) {
                                            completion(response, error);
                                          }];
+
     _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
     NSLog(@"HEADERS: %@", _call.requestHeaders);
     [_call start];
 
     _streaming = YES;
 
-    InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
-    initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-    initialRecognizeRequest.sampleRate = self.sampleRate;
-    initialRecognizeRequest.languageCode = @"en-US";
-    initialRecognizeRequest.maxAlternatives = 30;
-    initialRecognizeRequest.continuous = YES;
-    initialRecognizeRequest.interimResults = YES;
-    initialRecognizeRequest.enableEndpointerEvents = YES;
-    request.initialRequest = initialRecognizeRequest;
+    RecognitionConfig *recognitionConfig = [RecognitionConfig message];
+    recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
+    recognitionConfig.sampleRate = self.sampleRate;
+    recognitionConfig.languageCode = @"en-US";
+    recognitionConfig.maxAlternatives = 30;
+
+    StreamingRecognitionConfig *streamingRecognitionConfig = [StreamingRecognitionConfig message];
+    streamingRecognitionConfig.config = recognitionConfig;
+    streamingRecognitionConfig.singleUtterance = NO;
+    streamingRecognitionConfig.interimResults = YES;
+
+    StreamingRecognizeRequest *request = [StreamingRecognizeRequest message];
+    request.streamingConfig = streamingRecognitionConfig;
+
+    [_writer writeValue:request];
   }
 
-  AudioRequest *audioRequest = [AudioRequest message];
-  audioRequest.content = audioData;
-  request.audioRequest = audioRequest;
+  StreamingRecognizeRequest *request = [StreamingRecognizeRequest message];
+  request.audioContent = audioData;
 
   [_writer writeValue:request];
 }

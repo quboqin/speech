@@ -20,7 +20,10 @@ Pod::Spec.new do |s|
     ms.source_files = "google/**/*.pbobjc.{h,m}"
     ms.header_mappings_dir = "."
     ms.requires_arc = false
-    ms.dependency "Protobuf", "= 3.0.0-beta-2"
+    ms.dependency "Protobuf", "~> 3.0.0-beta-3"
+    ms.pod_target_xcconfig = {
+         'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1',
+    }
   end
 
   # The --objcgrpc_out plugin generates a pair of .pbrpc.h/.pbrpc.m files for each .proto file with
@@ -29,7 +32,7 @@ Pod::Spec.new do |s|
     ss.source_files = "google/**/*.pbrpc.{h,m}"
     ss.header_mappings_dir = "."
     ss.requires_arc = true
-    ss.dependency "gRPC", "~> 0.12"
+    ss.dependency "gRPC-ProtoRPC", "~> 0.14"
     ss.dependency "#{s.name}/Messages"
   end
 end

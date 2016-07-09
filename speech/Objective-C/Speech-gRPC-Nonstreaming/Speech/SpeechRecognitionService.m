@@ -16,7 +16,7 @@
 
 #import "SpeechRecognitionService.h"
 
-#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
+#import "google/cloud/speech/v1beta1/CloudSpeech.pbrpc.h"
 #import <GRPCClient/GRPCCall.h>
 #import <ProtoRPC/ProtoRPC.h>
 
@@ -37,39 +37,36 @@
 
   static NSString * const kHostAddress = @"speech.googleapis.com";
 
-  InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
-  initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-  initialRecognizeRequest.sampleRate = 16000;
-  initialRecognizeRequest.languageCode = @"en-US";
-  initialRecognizeRequest.maxAlternatives = 30;
+  RecognitionConfig *recognitionConfig = [RecognitionConfig message];
+  recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
+  recognitionConfig.sampleRate = 16000;
+  recognitionConfig.languageCode = @"en-US";
+  recognitionConfig.maxAlternatives = 30;
 
-  AudioRequest *audioRequest = [AudioRequest message];
-  audioRequest.content = audioData;
+  RecognitionAudio *recognitionAudio = [RecognitionAudio message];
+  recognitionAudio.content = audioData;
 
-  RecognizeRequest *request = [RecognizeRequest message];
-  request.initialRequest = initialRecognizeRequest;
-  request.audioRequest = audioRequest;
+  SyncRecognizeRequest *request = [SyncRecognizeRequest message];
+  request.config = recognitionConfig;
+  request.audio = recognitionAudio;
 
   Speech *client = [[Speech alloc] initWithHost:kHostAddress];
 
-  ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
+  GRPCProtoCall *call = [client RPCToSyncRecognizeWithRequest:request
                                                          handler:
-                    ^(NonStreamingRecognizeResponse *response, NSError *error) {
-                      NSLog(@"RESPONSE RECEIVED");
+                    ^(SyncRecognizeResponse *response, NSError *error) {
+                      NSLog(@"RESPONSE RECEIVED %@", response);
                       if (error) {
                         NSLog(@"ERROR: %@", error);
                         completion([error description]);
                       } else {
-                        for (RecognizeResponse *recognizeResponse in response.responsesArray) {
-                          NSLog(@"RESPONSE");
-                          for (SpeechRecognitionResult *result in recognizeResponse.resultsArray) {
+                          for (SpeechRecognitionResult *result in response.resultsArray) {
                             NSLog(@"RESULT");
                             for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
                               NSLog(@"ALTERNATIVE %0.4f %@",
                                     alternative.confidence,
                                     alternative.transcript);
                             }
-                          }
                         }
                         completion(response);
                       }
