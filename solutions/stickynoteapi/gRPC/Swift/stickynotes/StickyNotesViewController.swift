@@ -23,7 +23,7 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var streamSwitch: UISwitch!
   var client: StickyNote?
-  var updateCall: ProtoRPC?
+  var updateCall: GRPCProtoCall?
   var updateWriter: GRXBufferedPipe?
 
   override func viewDidLoad() {
