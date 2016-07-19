@@ -21,6 +21,7 @@
 #import <ProtoRPC/ProtoRPC.h>
 
 #define API_KEY @"YOUR_API_KEY"
+#define HOST @"speech.googleapis.com"
 
 @implementation SpeechRecognitionService
 
@@ -35,8 +36,7 @@
 - (void) processAudioData:(NSData *) audioData
            withCompletion:(SpeechRecognitionCompletionHandler)completion {
 
-  static NSString * const kHostAddress = @"speech.googleapis.com";
-
+  // construct a request for synchronous speech recognition
   RecognitionConfig *recognitionConfig = [RecognitionConfig message];
   recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
   recognitionConfig.sampleRate = 16000;
@@ -46,34 +46,38 @@
   RecognitionAudio *recognitionAudio = [RecognitionAudio message];
   recognitionAudio.content = audioData;
 
-  SyncRecognizeRequest *request = [SyncRecognizeRequest message];
-  request.config = recognitionConfig;
-  request.audio = recognitionAudio;
+  SyncRecognizeRequest *syncRecognizeRequest = [SyncRecognizeRequest message];
+  syncRecognizeRequest.config = recognitionConfig;
+  syncRecognizeRequest.audio = recognitionAudio;
 
-  Speech *client = [[Speech alloc] initWithHost:kHostAddress];
+  Speech *client = [[Speech alloc] initWithHost:HOST];
 
-  GRPCProtoCall *call = [client RPCToSyncRecognizeWithRequest:request
-                                                         handler:
-                    ^(SyncRecognizeResponse *response, NSError *error) {
-                      NSLog(@"RESPONSE RECEIVED %@", response);
-                      if (error) {
-                        NSLog(@"ERROR: %@", error);
-                        completion([error description]);
-                      } else {
-                          for (SpeechRecognitionResult *result in response.resultsArray) {
-                            NSLog(@"RESULT");
-                            for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
-                              NSLog(@"ALTERNATIVE %0.4f %@",
-                                    alternative.confidence,
-                                    alternative.transcript);
-                            }
-                        }
-                        completion(response);
-                      }
-                    }];
+  // prepare a single gRPC call to make the request
+  GRPCProtoCall *call = [client RPCToSyncRecognizeWithRequest:syncRecognizeRequest
+                                                      handler:
+                         ^(SyncRecognizeResponse *response, NSError *error) {
+                           NSLog(@"RESPONSE RECEIVED %@", response);
+                           if (error) {
+                             NSLog(@"ERROR: %@", error);
+                             completion([error description]);
+                           } else {
+                             for (SpeechRecognitionResult *result in response.resultsArray) {
+                               NSLog(@"RESULT");
+                               for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
+                                 NSLog(@"ALTERNATIVE %0.4f %@",
+                                       alternative.confidence,
+                                       alternative.transcript);
+                               }
+                             }
+                             completion(response);
+                           }
+                         }];
 
+  // authenticate using an API key obtained from the Google Cloud Console
   call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
   NSLog(@"HEADERS: %@", call.requestHeaders);
+
+  // perform the gRPC request
   [call start];
 }
 

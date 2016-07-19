@@ -1,21 +1,12 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '8.0'
+
 # Uncomment this line if you're using Swift
-# use_frameworks!
-
-pod 'googleapis', :path => '../../../googleapis'
-
-grpc_repo = 'https://github.com/grpc/grpc'
-grpc_commit = '2b98c8838d2035296b9cb016fc9af2bb8a987d90'
+#use_frameworks!
 
 target 'Speech' do
 
-  pod 'BoringSSL', :podspec => "#{grpc_repo}/raw/#{grpc_commit}/src/objective-c/BoringSSL.podspec"
-
-  pod 'gRPC', :git => "#{grpc_repo}.git", :commit=> "#{grpc_commit}"
-  pod 'gRPC-Core', :git => "#{grpc_repo}.git", :commit => "#{grpc_commit}", :submodules => true
-  pod 'gRPC-RxLibrary', :git => "#{grpc_repo}.git", :commit => "#{grpc_commit}"
-  pod 'gRPC-ProtoRPC', :git => "#{grpc_repo}.git", :commit => "#{grpc_commit}"
+  pod 'googleapis', :path => '.'
 
 end
 

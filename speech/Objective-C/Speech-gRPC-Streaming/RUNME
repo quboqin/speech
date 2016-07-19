@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo "Install Cocoapod dependencies"
+echo "Installing Cocoapod dependencies"
 pod install
 
-echo "Open the project workspace in Xcode"
+echo "Opening the project workspace in Xcode"
 open Speech.xcworkspace
 
 echo "Now press the run button!"

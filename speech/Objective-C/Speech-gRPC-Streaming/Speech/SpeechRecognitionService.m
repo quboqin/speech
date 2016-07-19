@@ -47,6 +47,7 @@
           withCompletion:(SpeechRecognitionCompletionHandler)completion {
 
   if (!_streaming) {
+    // if we aren't already streaming, set up a gRPC connection
     _client = [[Speech alloc] initWithHost:HOST];
     _writer = [[GRXBufferedPipe alloc] init];
     _call = [_client RPCToStreamingRecognizeWithRequestsWriter:_writer
@@ -54,12 +55,14 @@
                                            completion(response, error);
                                          }];
 
+    // authenticate using an API key obtained from the Google Cloud Console
     _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
     NSLog(@"HEADERS: %@", _call.requestHeaders);
-    [_call start];
 
+    [_call start];
     _streaming = YES;
 
+    // send an initial request message to configure the service
     RecognitionConfig *recognitionConfig = [RecognitionConfig message];
     recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
     recognitionConfig.sampleRate = self.sampleRate;
@@ -71,16 +74,16 @@
     streamingRecognitionConfig.singleUtterance = NO;
     streamingRecognitionConfig.interimResults = YES;
 
-    StreamingRecognizeRequest *request = [StreamingRecognizeRequest message];
-    request.streamingConfig = streamingRecognitionConfig;
+    StreamingRecognizeRequest *streamingRecognizeRequest = [StreamingRecognizeRequest message];
+    streamingRecognizeRequest.streamingConfig = streamingRecognitionConfig;
 
-    [_writer writeValue:request];
+    [_writer writeValue:streamingRecognizeRequest];
   }
 
-  StreamingRecognizeRequest *request = [StreamingRecognizeRequest message];
-  request.audioContent = audioData;
-
-  [_writer writeValue:request];
+  // send a request message containing the audio data
+  StreamingRecognizeRequest *streamingRecognizeRequest = [StreamingRecognizeRequest message];
+  streamingRecognizeRequest.audioContent = audioData;
+  [_writer writeValue:streamingRecognizeRequest];
 }
 
 - (void) stopStreaming {
