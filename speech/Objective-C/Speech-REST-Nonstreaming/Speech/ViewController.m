@@ -125,6 +125,7 @@
                     ^{
                       NSString *stringResult = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                       _textView.text = stringResult;
+                      NSLog(@"RESULT: %@", stringResult);
                     });
    }];
   [task resume];
