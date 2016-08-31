@@ -57,6 +57,9 @@
 
     // authenticate using an API key obtained from the Google Cloud Console
     _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
+    // if the API key has a bundle ID restriction, specify the bundle ID like this
+    _call.requestHeaders[@"X-Ios-Bundle-Identifier"] = [[NSBundle mainBundle] bundleIdentifier];
+
     NSLog(@"HEADERS: %@", _call.requestHeaders);
 
     [_call start];

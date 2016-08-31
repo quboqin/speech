@@ -75,6 +75,8 @@
 
   // authenticate using an API key obtained from the Google Cloud Console
   call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
+  // if the API key has a bundle ID restriction, specify the bundle ID like this
+  call.requestHeaders[@"X-Ios-Bundle-Identifier"] = [[NSBundle mainBundle] bundleIdentifier];
   NSLog(@"HEADERS: %@", call.requestHeaders);
 
   // perform the gRPC request
