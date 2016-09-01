@@ -8,7 +8,6 @@ This app demonstrates how to make streaming gRPC connections to the [Cloud Speec
 - An OSX machine or emulator
 - [Xcode 7][xcode]
 - [Cocoapods][cocoapods] version 1.0 or later
-- protoc installed as described in the [gRPC Objective-C setup]
 
 ## Quickstart
 - Clone this repo and `cd` into this directory.

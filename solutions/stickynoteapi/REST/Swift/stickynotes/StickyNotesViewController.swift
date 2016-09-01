@@ -22,11 +22,13 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var textField: UITextField!
 
+  override open var preferredStatusBarStyle : UIStatusBarStyle {get {return .lightContent}}
+
   func textFieldDidEndEditing(_ textField: UITextField) {
     let urlComponents = NSURLComponents()
     urlComponents.scheme = "http";
     urlComponents.host = kHostAddress;
-    urlComponents.port = kHostPort;
+    urlComponents.port = NSNumber(value:kHostPort);
     urlComponents.path = "/stickynote";
 
     let messageQuery = URLQueryItem(name: "message", value: textField.text)
@@ -34,16 +36,16 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
 
     if let url = urlComponents.url {
       let request = URLRequest(url:url)
-      let session = URLSession.shared()
+      let session = URLSession.shared
       let task = session.dataTask(with: request, completionHandler: {data, response, error in
         if let data = data {
           DispatchQueue.main.async(execute: {
-            self.imageView.backgroundColor = UIColor.gray()
+            self.imageView.backgroundColor = UIColor.gray
             self.imageView.image = UIImage(data:data)
           })
         } else {
           DispatchQueue.main.async(execute: {
-            self.imageView.backgroundColor = UIColor.red()
+            self.imageView.backgroundColor = UIColor.red
             self.imageView.image = nil
           })
         }
@@ -55,10 +57,6 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
-  }
-
-  override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    return .lightContent
   }
   
 }

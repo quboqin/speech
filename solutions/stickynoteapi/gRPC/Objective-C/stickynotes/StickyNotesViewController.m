@@ -39,7 +39,7 @@ static BOOL useSSL = NO;
 @property (nonatomic, strong) NSString *addressWithPort;
 
 @property (nonatomic, strong) StickyNote *client;
-@property (nonatomic, strong) ProtoRPC *updateCall;
+@property (nonatomic, strong) GRPCProtoCall *updateCall;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
 
 @end
@@ -73,11 +73,11 @@ static BOOL useSSL = NO;
 - (void) getStickynoteWithMessage:(NSString *) message {
   StickyNoteRequest *request = [StickyNoteRequest message];
   request.message = message;
-  ProtoRPC *call = [_client RPCToGetWithRequest:request
-                                       handler:
-                    ^(StickyNoteResponse *response, NSError *error) {
-                      [self handleStickynoteResponse:response andError:error];
-                    }];
+  GRPCProtoCall *call = [_client RPCToGetWithRequest:request
+                                             handler:
+                         ^(StickyNoteResponse *response, NSError *error) {
+                           [self handleStickynoteResponse:response andError:error];
+                         }];
   [call start];
 }
 

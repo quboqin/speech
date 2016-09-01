@@ -19,7 +19,7 @@
 #import "ViewController.h"
 #import "AudioController.h"
 #import "SpeechRecognitionService.h"
-#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
+#import "google/cloud/speech/v1beta1/CloudSpeech.pbrpc.h"
 
 #define SAMPLE_RATE 16000.0f
 
@@ -62,31 +62,32 @@
   }
   NSLog(@"audio %d %d", (int) frameCount, (int) (sum * 1.0 / frameCount));
 
-  if ([self.audioData length] > 16384) {
+  // We recommend sending samples in 100ms chunks
+  int chunk_size = 0.1 /* seconds/chunk */ * SAMPLE_RATE * 2 /* bytes/sample */ ; /* bytes/chunk */
+
+  if ([self.audioData length] > chunk_size) {
     NSLog(@"SENDING");
     [[SpeechRecognitionService sharedInstance] streamAudioData:self.audioData
-                                                withCompletion:^(RecognizeResponse *response, NSError *error) {
-                                                  if (response) {
+                                                withCompletion:^(StreamingRecognizeResponse *response, NSError *error) {
+                                                  if (error) {
+                                                    NSLog(@"ERROR: %@", error);
+                                                    _textView.text = [error localizedDescription];
+                                                    [self stopAudio:nil];
+                                                  } else if (response) {
                                                     BOOL finished = NO;
-                                                    NSLog(@"RESPONSE RECEIVED");
-                                                    if (error) {
-                                                      NSLog(@"ERROR: %@", error);
-                                                    } else {
-                                                      NSLog(@"RESPONSE: %@", response);
-                                                      for (SpeechRecognitionResult *result in response.resultsArray) {
-                                                        if (result.isFinal) {
-                                                          finished = YES;
-                                                        }
+                                                    NSLog(@"RESPONSE: %@", response);
+                                                    for (StreamingRecognitionResult *result in response.resultsArray) {
+                                                      if (result.isFinal) {
+                                                        finished = YES;
                                                       }
-                                                      _textView.text = [response description];
                                                     }
+                                                    _textView.text = [response description];
                                                     if (finished) {
                                                       [self stopAudio:nil];
                                                     }
-                                                  } else {
-                                                    [self stopAudio:nil];
                                                   }
-                                                }];
+                                                }
+     ];
     self.audioData = [[NSMutableData alloc] init];
   }
 }

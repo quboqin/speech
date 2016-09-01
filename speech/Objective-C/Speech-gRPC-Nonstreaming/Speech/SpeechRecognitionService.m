@@ -16,11 +16,12 @@
 
 #import "SpeechRecognitionService.h"
 
-#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
+#import "google/cloud/speech/v1beta1/CloudSpeech.pbrpc.h"
 #import <GRPCClient/GRPCCall.h>
 #import <ProtoRPC/ProtoRPC.h>
 
 #define API_KEY @"YOUR_API_KEY"
+#define HOST @"speech.googleapis.com"
 
 @implementation SpeechRecognitionService
 
@@ -35,48 +36,50 @@
 - (void) processAudioData:(NSData *) audioData
            withCompletion:(SpeechRecognitionCompletionHandler)completion {
 
-  static NSString * const kHostAddress = @"speech.googleapis.com";
+  // construct a request for synchronous speech recognition
+  RecognitionConfig *recognitionConfig = [RecognitionConfig message];
+  recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
+  recognitionConfig.sampleRate = 16000;
+  recognitionConfig.languageCode = @"en-US";
+  recognitionConfig.maxAlternatives = 30;
 
-  InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
-  initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-  initialRecognizeRequest.sampleRate = 16000;
-  initialRecognizeRequest.languageCode = @"en-US";
-  initialRecognizeRequest.maxAlternatives = 30;
+  RecognitionAudio *recognitionAudio = [RecognitionAudio message];
+  recognitionAudio.content = audioData;
 
-  AudioRequest *audioRequest = [AudioRequest message];
-  audioRequest.content = audioData;
+  SyncRecognizeRequest *syncRecognizeRequest = [SyncRecognizeRequest message];
+  syncRecognizeRequest.config = recognitionConfig;
+  syncRecognizeRequest.audio = recognitionAudio;
 
-  RecognizeRequest *request = [RecognizeRequest message];
-  request.initialRequest = initialRecognizeRequest;
-  request.audioRequest = audioRequest;
+  Speech *client = [[Speech alloc] initWithHost:HOST];
 
-  Speech *client = [[Speech alloc] initWithHost:kHostAddress];
+  // prepare a single gRPC call to make the request
+  GRPCProtoCall *call = [client RPCToSyncRecognizeWithRequest:syncRecognizeRequest
+                                                      handler:
+                         ^(SyncRecognizeResponse *response, NSError *error) {
+                           NSLog(@"RESPONSE RECEIVED %@", response);
+                           if (error) {
+                             NSLog(@"ERROR: %@", error);
+                             completion([error description]);
+                           } else {
+                             for (SpeechRecognitionResult *result in response.resultsArray) {
+                               NSLog(@"RESULT");
+                               for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
+                                 NSLog(@"ALTERNATIVE %0.4f %@",
+                                       alternative.confidence,
+                                       alternative.transcript);
+                               }
+                             }
+                             completion(response);
+                           }
+                         }];
 
-  ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
-                                                         handler:
-                    ^(NonStreamingRecognizeResponse *response, NSError *error) {
-                      NSLog(@"RESPONSE RECEIVED");
-                      if (error) {
-                        NSLog(@"ERROR: %@", error);
-                        completion([error description]);
-                      } else {
-                        for (RecognizeResponse *recognizeResponse in response.responsesArray) {
-                          NSLog(@"RESPONSE");
-                          for (SpeechRecognitionResult *result in recognizeResponse.resultsArray) {
-                            NSLog(@"RESULT");
-                            for (SpeechRecognitionAlternative *alternative in result.alternativesArray) {
-                              NSLog(@"ALTERNATIVE %0.4f %@",
-                                    alternative.confidence,
-                                    alternative.transcript);
-                            }
-                          }
-                        }
-                        completion(response);
-                      }
-                    }];
-
+  // authenticate using an API key obtained from the Google Cloud Console
   call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
+  // if the API key has a bundle ID restriction, specify the bundle ID like this
+  call.requestHeaders[@"X-Ios-Bundle-Identifier"] = [[NSBundle mainBundle] bundleIdentifier];
   NSLog(@"HEADERS: %@", call.requestHeaders);
+
+  // perform the gRPC request
   [call start];
 }
 

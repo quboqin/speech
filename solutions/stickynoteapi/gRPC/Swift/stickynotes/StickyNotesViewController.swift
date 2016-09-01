@@ -23,12 +23,12 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var streamSwitch: UISwitch!
   var client: StickyNote?
-  var updateCall: ProtoRPC?
+  var updateCall: GRPCProtoCall?
   var updateWriter: GRXBufferedPipe?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.darkGray()
+    view.backgroundColor = UIColor.darkGray
     configureNetworking()
   }
 
@@ -42,7 +42,7 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
       addressWithPort = hostAddress + ":443"
       // This tells the GRPC library to trust a certificate that it might not be able to validate.
       // Typically this would be used to trust a self-signed certificate.
-      if let certificateFilePath = Bundle.main().pathForResource("ssl", ofType: "crt") {
+      if let certificateFilePath = Bundle.main.path(forResource: "ssl", ofType: "crt") {
         GRPCCall.useTestCertsPath(certificateFilePath, testName: "example.com", forHost: hostAddress)
       }
     }
@@ -50,24 +50,24 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
   }
 
   @IBAction func textFieldDidEndEditing(_ textField: UITextField) {
-    getStickynote(message: textField.text!)
+    getStickynote(textField.text!)
   }
 
-  func handleStickynoteResponse(response: StickyNoteResponse?, error: NSError?) {
+  func handleStickynoteResponse(_ response: StickyNoteResponse?, error: Error?) {
     if (error != nil) {
-      imageView.backgroundColor = UIColor.red()
+      imageView.backgroundColor = UIColor.red
       imageView.image = nil;
     } else if let response = response {
       imageView.image = UIImage(data: response.image);
     }
   }
 
-  func getStickynote(message: String) {
+  func getStickynote(_ message: String) {
     if let client = client {
       let request = StickyNoteRequest()
       request.message = message
       let call = client.rpcToGet(with: request, handler: { (response, error) in
-        self.handleStickynoteResponse(response: response, error: error)
+        self.handleStickynoteResponse(response, error: error)
       })
       call.start()
     }
@@ -80,7 +80,7 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
       if let updateWriter = updateWriter {
         updateCall = client.rpcToUpdate(withRequestsWriter: updateWriter,
                                         eventHandler: { (done, response, error) in
-                                          self.handleStickynoteResponse(response: response, error: error)
+                                          self.handleStickynoteResponse(response, error: error)
         })
         if let updateCall = updateCall {
           updateCall.start()
@@ -109,7 +109,7 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
     return false
   }
 
-  @IBAction func switchValueDidChange(`switch`: UISwitch) {
+  @IBAction func switchValueDidChange(_ switch: UISwitch) {
     if (`switch`.isOn) {
       openStreamingConnection()
     } else {
@@ -117,7 +117,5 @@ class StickyNotesViewController: UIViewController, UITextFieldDelegate {
     }
   }
 
-  override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    return .lightContent
-  }
+
 }

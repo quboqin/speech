@@ -111,6 +111,8 @@
   NSString *path = service;
   NSURL *URL = [NSURL URLWithString:path];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+  // if your API key has a bundle ID restriction, specify the bundle ID like this:
+  [request addValue:[[NSBundle mainBundle] bundleIdentifier] forHTTPHeaderField:@"X-Ios-Bundle-Identifier"];
   NSString *contentType = @"application/json";
   [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
   [request setHTTPBody:requestData];
@@ -125,6 +127,7 @@
                     ^{
                       NSString *stringResult = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                       _textView.text = stringResult;
+                      NSLog(@"RESULT: %@", stringResult);
                     });
    }];
   [task resume];

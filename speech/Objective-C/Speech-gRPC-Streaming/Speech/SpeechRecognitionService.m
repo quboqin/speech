@@ -28,7 +28,7 @@
 @property (nonatomic, assign) BOOL streaming;
 @property (nonatomic, strong) Speech *client;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
-@property (nonatomic, strong) ProtoRPC *call;
+@property (nonatomic, strong) GRPCProtoCall *call;
 
 @end
 
@@ -46,37 +46,47 @@
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion {
 
-  RecognizeRequest *request = [RecognizeRequest message];
-
   if (!_streaming) {
+    // if we aren't already streaming, set up a gRPC connection
     _client = [[Speech alloc] initWithHost:HOST];
     _writer = [[GRXBufferedPipe alloc] init];
-    _call = [_client RPCToRecognizeWithRequestsWriter:_writer
-                                         eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
+    _call = [_client RPCToStreamingRecognizeWithRequestsWriter:_writer
+                                         eventHandler:^(BOOL done, StreamingRecognizeResponse *response, NSError *error) {
                                            completion(response, error);
                                          }];
-    _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
-    NSLog(@"HEADERS: %@", _call.requestHeaders);
-    [_call start];
 
+    // authenticate using an API key obtained from the Google Cloud Console
+    _call.requestHeaders[@"X-Goog-Api-Key"] = API_KEY;
+    // if the API key has a bundle ID restriction, specify the bundle ID like this
+    _call.requestHeaders[@"X-Ios-Bundle-Identifier"] = [[NSBundle mainBundle] bundleIdentifier];
+
+    NSLog(@"HEADERS: %@", _call.requestHeaders);
+
+    [_call start];
     _streaming = YES;
 
-    InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
-    initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-    initialRecognizeRequest.sampleRate = self.sampleRate;
-    initialRecognizeRequest.languageCode = @"en-US";
-    initialRecognizeRequest.maxAlternatives = 30;
-    initialRecognizeRequest.continuous = YES;
-    initialRecognizeRequest.interimResults = YES;
-    initialRecognizeRequest.enableEndpointerEvents = YES;
-    request.initialRequest = initialRecognizeRequest;
+    // send an initial request message to configure the service
+    RecognitionConfig *recognitionConfig = [RecognitionConfig message];
+    recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
+    recognitionConfig.sampleRate = self.sampleRate;
+    recognitionConfig.languageCode = @"en-US";
+    recognitionConfig.maxAlternatives = 30;
+
+    StreamingRecognitionConfig *streamingRecognitionConfig = [StreamingRecognitionConfig message];
+    streamingRecognitionConfig.config = recognitionConfig;
+    streamingRecognitionConfig.singleUtterance = NO;
+    streamingRecognitionConfig.interimResults = YES;
+
+    StreamingRecognizeRequest *streamingRecognizeRequest = [StreamingRecognizeRequest message];
+    streamingRecognizeRequest.streamingConfig = streamingRecognitionConfig;
+
+    [_writer writeValue:streamingRecognizeRequest];
   }
 
-  AudioRequest *audioRequest = [AudioRequest message];
-  audioRequest.content = audioData;
-  request.audioRequest = audioRequest;
-
-  [_writer writeValue:request];
+  // send a request message containing the audio data
+  StreamingRecognizeRequest *streamingRecognizeRequest = [StreamingRecognizeRequest message];
+  streamingRecognizeRequest.audioContent = audioData;
+  [_writer writeValue:streamingRecognizeRequest];
 }
 
 - (void) stopStreaming {
