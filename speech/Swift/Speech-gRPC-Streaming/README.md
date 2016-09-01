@@ -39,7 +39,7 @@ This app demonstrates how to make streaming gRPC connections to the [Cloud Speec
 
 - `open Speech.xcworkspace` to open this project in Xcode. Since we are using Cocoapods, be sure to open the workspace and not Speech.xcodeproj.
 
-- In Xcode's Project Navigator, open the `SpeechRecognitionService.m` file within the `Speech` directory.
+- In Xcode's Project Navigator, open the `SpeechRecognitionService.swift` file within the `Speech` directory.
 
 - Find the line where the `API_KEY` is set. Replace the string value with the API key obtained from the Cloud console above. This key is the credential used to authenticate all requests to the Speech API. Calls to the API are thus associated with the project you created above, for access and billing purposes.
 

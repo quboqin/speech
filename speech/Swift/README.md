@@ -6,7 +6,4 @@ Please note: As this new service is rolled out, early users will be whitelisted.
 
 ## Contents
 
-### [Objective-C](Objective-C)
-
-### [Swift](Swift)
-
+### [Speech-gRPC-Streaming](Speech-gRPC-Streaming)
