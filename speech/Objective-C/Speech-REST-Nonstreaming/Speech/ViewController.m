@@ -91,18 +91,18 @@
 - (IBAction) processAudio:(id) sender {
   [self stopAudio:sender];
 
-  NSString *service = @"https:/speech.googleapis.com/v1/speech:recognize";
+  NSString *service = @"https:/speech.googleapis.com/v1beta1/speech:syncrecognize";
   service = [service stringByAppendingString:@"?key="];
   service = [service stringByAppendingString:API_KEY];
 
   NSData *audioData = [NSData dataWithContentsOfFile:[self soundFilePath]];
-  NSDictionary *initialRequest = @{@"encoding":@"LINEAR16",
-                                   @"sampleRate":@(SAMPLE_RATE),
-                                   @"languageCode":@"en-US",
-                                   @"maxAlternatives":@30};
+  NSDictionary *configRequest = @{@"encoding":@"LINEAR16",
+                                  @"sampleRate":@(SAMPLE_RATE),
+                                  @"languageCode":@"en-US",
+                                  @"maxAlternatives":@30};
   NSDictionary *audioRequest = @{@"content":[audioData base64EncodedStringWithOptions:0]};
-  NSDictionary *requestDictionary = @{@"initialRequest":initialRequest,
-                                      @"audioRequest":audioRequest};
+  NSDictionary *requestDictionary = @{@"config":configRequest,
+                                      @"audio":audioRequest};
   NSError *error;
   NSData *requestData = [NSJSONSerialization dataWithJSONObject:requestDictionary
                                                         options:0
