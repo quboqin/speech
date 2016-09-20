@@ -3,7 +3,7 @@
 This app demonstrates how to make nonstreaming gRPC connections to the [Cloud Speech API](https://cloud.google.com/speech/) to recognize speech in recorded audio.
 
 ## Prerequisites
-- An API key for the Cloud Speech API (See
+- An iOS API key for the Cloud Speech API (See
   [the docs][getting-started] to learn more)
 - An OSX machine or emulator
 - [Xcode 7][xcode]
@@ -26,7 +26,7 @@ This app demonstrates how to make nonstreaming gRPC connections to the [Cloud Sp
   - Create a project (or use an existing one) in the [Cloud
     Console][cloud-console]
   - [Enable billing][billing] and the [Speech API][enable-speech].
-  - Create an [API key][api-key], and save this for later.
+  - Create an iOS [API key][api-key], and save this for later.
 
 - Clone this repository on GitHub. If you have [`git`][git] installed, you can do this by executing the following command:
 
@@ -41,7 +41,7 @@ This app demonstrates how to make nonstreaming gRPC connections to the [Cloud Sp
 
 - In Xcode's Project Navigator, open the `SpeechRecognitionService.m` file within the `Speech` directory.
 
-- Find the line where the `API_KEY` is set. Replace the string value with the API key obtained from the Cloud console above. This key is the credential used to authenticate all requests to the Speech API. Calls to the API are thus associated with the project you created above, for access and billing purposes.
+- Find the line where the `API_KEY` is set. Replace the string value with the iOS API key obtained from the Cloud console above. This key is the credential used to authenticate all requests to the Speech API. Calls to the API are thus associated with the project you created above, for access and billing purposes.
 
 - You are now ready to build and run the project. In Xcode you can do this by clicking the 'Play' button in the top left. This will launch the app on the simulator or on the device you've selected. Be sure that the 'Speech' target is selected in the popup near the top left of the Xcode window. 
 
