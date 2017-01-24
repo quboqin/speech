@@ -57,24 +57,28 @@ class ViewController : UIViewController, AudioControllerDelegate {
     if (audioData.length > chunkSize) {
       SpeechRecognitionService.sharedInstance.streamAudioData(audioData,
                                                               completion:
-        { (response, error) in
-          if let error = error {
-            self.textView.text = error.localizedDescription
-          } else if let response = response {
-            var finished = false
-            print(response)
-            for result in response.resultsArray! {
-              if let result = result as? StreamingRecognitionResult {
-                if result.isFinal {
-                  finished = true
+        { [weak self] (response, error) in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            if let error = error {
+                strongSelf.textView.text = error.localizedDescription
+            } else if let response = response {
+                var finished = false
+                print(response)
+                for result in response.resultsArray! {
+                    if let result = result as? StreamingRecognitionResult {
+                        if result.isFinal {
+                            finished = true
+                        }
+                    }
                 }
-              }
+                strongSelf.textView.text = response.description
+                if finished {
+                    strongSelf.stopAudio(strongSelf)
+                }
             }
-            self.textView.text = response.description
-            if finished {
-              self.stopAudio(self)
-            }
-          }
       })
       self.audioData = NSMutableData()
     }
