@@ -68,7 +68,7 @@
     // send an initial request message to configure the service
     RecognitionConfig *recognitionConfig = [RecognitionConfig message];
     recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
-    recognitionConfig.sampleRate = self.sampleRate;
+    recognitionConfig.sampleRateHertz = self.sampleRate;
     recognitionConfig.languageCode = @"en-US";
     recognitionConfig.maxAlternatives = 30;
 

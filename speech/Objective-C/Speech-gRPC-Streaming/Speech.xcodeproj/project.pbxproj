@@ -126,12 +126,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D34C17E01C948F5800D69BCA /* Build configuration list for PBXNativeTarget "Speech" */;
 			buildPhases = (
-				D7376F491EC06AD174E07DB4 /* 📦 Check Pods Manifest.lock */,
+				D7376F491EC06AD174E07DB4 /* [CP] Check Pods Manifest.lock */,
 				D34C17C51C948F5700D69BCA /* Sources */,
 				D34C17C61C948F5700D69BCA /* Frameworks */,
 				D34C17C71C948F5700D69BCA /* Resources */,
-				A6C1304F9E6165DD748FC67B /* 📦 Embed Pods Frameworks */,
-				D8EE167099E5A7E524284D70 /* 📦 Copy Pods Resources */,
+				A6C1304F9E6165DD748FC67B /* [CP] Embed Pods Frameworks */,
+				D8EE167099E5A7E524284D70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -188,14 +188,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A6C1304F9E6165DD748FC67B /* 📦 Embed Pods Frameworks */ = {
+		A6C1304F9E6165DD748FC67B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,29 +203,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Speech/Pods-Speech-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D7376F491EC06AD174E07DB4 /* 📦 Check Pods Manifest.lock */ = {
+		D7376F491EC06AD174E07DB4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D8EE167099E5A7E524284D70 /* 📦 Copy Pods Resources */ = {
+		D8EE167099E5A7E524284D70 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,12 +349,7 @@
 			baseConfigurationReference = C2D2368DBC8898A52FE6113B /* Pods-Speech.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
-				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited) \"${PODS_ROOT}/Headers/Public\" \"${PODS_ROOT}/Headers/Public/!ProtoCompiler\" \"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"";
 				INFOPLIST_FILE = Speech/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.google.speech-grpc-streaming";

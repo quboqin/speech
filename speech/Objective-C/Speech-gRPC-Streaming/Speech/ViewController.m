@@ -19,7 +19,7 @@
 #import "ViewController.h"
 #import "AudioController.h"
 #import "SpeechRecognitionService.h"
-#import "google/cloud/speech/v1beta1/CloudSpeech.pbrpc.h"
+#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
 #define SAMPLE_RATE 16000.0f
 
