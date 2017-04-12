@@ -56,7 +56,7 @@ class SpeechRecognitionService {
       // send an initial request message to configure the service
       let recognitionConfig = RecognitionConfig()
       recognitionConfig.encoding =  .linear16
-      recognitionConfig.sampleRate = Int32(sampleRate)
+      recognitionConfig.sampleRateHertz = Int32(sampleRate)
       recognitionConfig.languageCode = "en-US"
       recognitionConfig.maxAlternatives = 30
 

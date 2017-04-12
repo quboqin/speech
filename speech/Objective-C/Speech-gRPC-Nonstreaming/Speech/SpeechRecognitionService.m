@@ -16,7 +16,7 @@
 
 #import "SpeechRecognitionService.h"
 
-#import "google/cloud/speech/v1beta1/CloudSpeech.pbrpc.h"
+#import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 #import <GRPCClient/GRPCCall.h>
 #import <ProtoRPC/ProtoRPC.h>
 
@@ -39,23 +39,23 @@
   // construct a request for synchronous speech recognition
   RecognitionConfig *recognitionConfig = [RecognitionConfig message];
   recognitionConfig.encoding = RecognitionConfig_AudioEncoding_Linear16;
-  recognitionConfig.sampleRate = 16000;
+  recognitionConfig.sampleRateHertz = 16000;
   recognitionConfig.languageCode = @"en-US";
   recognitionConfig.maxAlternatives = 30;
 
   RecognitionAudio *recognitionAudio = [RecognitionAudio message];
   recognitionAudio.content = audioData;
 
-  SyncRecognizeRequest *syncRecognizeRequest = [SyncRecognizeRequest message];
-  syncRecognizeRequest.config = recognitionConfig;
-  syncRecognizeRequest.audio = recognitionAudio;
+  RecognizeRequest *recognizeRequest = [RecognizeRequest message];
+  recognizeRequest.config = recognitionConfig;
+  recognizeRequest.audio = recognitionAudio;
 
   Speech *client = [[Speech alloc] initWithHost:HOST];
 
   // prepare a single gRPC call to make the request
-  GRPCProtoCall *call = [client RPCToSyncRecognizeWithRequest:syncRecognizeRequest
-                                                      handler:
-                         ^(SyncRecognizeResponse *response, NSError *error) {
+  GRPCProtoCall *call = [client RPCToRecognizeWithRequest:recognizeRequest
+                                                  handler:
+                         ^(RecognizeResponse *response, NSError *error) {
                            NSLog(@"RESPONSE RECEIVED %@", response);
                            if (error) {
                              NSLog(@"ERROR: %@", error);

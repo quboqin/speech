@@ -6,7 +6,7 @@ This app demonstrates how to make nonstreaming REST connections to the [Cloud Sp
 - An iOS API key for the Cloud Speech API (See
   [the docs][getting-started] to learn more)
 - An OSX machine or emulator
-- [Xcode 7][xcode]
+- [Xcode 8][xcode]
 
 ## Quickstart
 - Clone this repo and `cd` into this directory.
