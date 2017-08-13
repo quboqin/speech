@@ -202,6 +202,12 @@ message RecognitionConfig {
 
   // *Optional* A means to provide context to assist the speech recognition.
   repeated SpeechContext speech_contexts = 6;
+
+  // *Optional* If ``true``, the top result includes a list of
+  // words and the start and end time offsets (timestamps) for
+  // those words. If ``false``, no word-level time offset
+  // information is returned. The default is ``false``.
+  bool enable_word_time_offsets = 8;
 }
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
