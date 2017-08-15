@@ -202,6 +202,12 @@ message RecognitionConfig {
 
   // *Optional* A means to provide context to assist the speech recognition.
   repeated SpeechContext speech_contexts = 6;
+
+  // *Optional* If ``true``, the top result includes a list of
+  // words and the start and end time offsets (timestamps) for
+  // those words. If ``false``, no word-level time offset
+  // information is returned. The default is ``false``.
+  bool enable_word_time_offsets = 8;
 }
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
@@ -393,4 +399,29 @@ message SpeechRecognitionAlternative {
   // any of the results.
   // The default of 0.0 is a sentinel value indicating `confidence` was not set.
   float confidence = 2;
+
+  // *Output-only* A list of word-specific information for each
+  // recognized word.
+  repeated WordInfo words = 3;
+}
+
+message WordInfo {
+
+  // *Output-only* Time offset relative to the beginning of the
+  // audio, and corresponding to the start of the spoken word. This
+  // field is only set if ``enable_word_time_offsets=true`` and
+  // only in the top hypothesis. This is an experimental feature
+  // and the accuracy of the time offset can vary.
+  google.protobuf.Timestamp start_time = 1;
+
+  // *Output-only* Time offset relative to the beginning of the
+  // audio, and corresponding to the end of the spoken word. This
+  // field is only set if ``enable_word_time_offsets=true`` and
+  // only in the top hypothesis. This is an experimental feature
+  // and the accuracy of the time offset can vary.
+  google.protobuf.Timestamp end_time = 2;
+
+  // *Output-only* The word corresponding to this set of
+  // information.
+  string word = 3;
 }

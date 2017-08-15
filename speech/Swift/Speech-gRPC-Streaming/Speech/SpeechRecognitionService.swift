@@ -59,6 +59,7 @@ class SpeechRecognitionService {
       recognitionConfig.sampleRateHertz = Int32(sampleRate)
       recognitionConfig.languageCode = "en-US"
       recognitionConfig.maxAlternatives = 30
+      recognitionConfig.enableWordTimeOffsets = true
 
       let streamingRecognitionConfig = StreamingRecognitionConfig()
       streamingRecognitionConfig.config = recognitionConfig
