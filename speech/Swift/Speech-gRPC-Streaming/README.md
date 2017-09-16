@@ -11,8 +11,7 @@ This app demonstrates how to make streaming gRPC connections to the [Cloud Speec
 
 ## Quickstart
 - Clone this repo and `cd` into this directory.
-- Run `pod install` to download and build Cocoapods dependencies.
-- Open the project by running `open Speech.xcworkspace`.
+- Run `./INSTALL`
 - In `Speech/SpeechRecognitionService.swift`, replace `YOUR_API_KEY` with the API key obtained above.
 - Build and run the app.
 
