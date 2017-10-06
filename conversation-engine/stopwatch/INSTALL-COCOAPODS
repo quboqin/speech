@@ -6,7 +6,7 @@ pod install
 echo "Clean BoringSSL module.modulemap"
 > Pods/BoringSSL/include/openssl/module.modulemap
 
-echo "Fix the bad imports in the generated files"
+echo "Fixing imports in the generated files"
 
 grep -rl "google/cloud/conversation/v1alpha/ConversationService.pbobjc.h"  google/** | \
 	xargs sed -i '' s@'"google\/cloud\/conversation\/v1alpha\/ConversationService\.pbobjc\.h"'@'\<googleapis\/ConversationService\.pbobjc\.h\>'@g
