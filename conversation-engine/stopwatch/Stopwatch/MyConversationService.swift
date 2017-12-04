@@ -47,19 +47,30 @@ class MyConversationService {
   }
   
   func fetchToken(_ completion:@escaping ()->()) {
-    let request : URLRequest = URLRequest(url:URL(string:TokenProviderURL)!)
-    let task = URLSession.shared.dataTask(with:request) {
-      (data, response, error) in
-      if let data = data {
-        let values = try! JSONSerialization.jsonObject(with: data) as! [String:Any]
-        let token = values["access_token"] as! String
-        self.token = token
-        completion()
-      } else {
-        completion()
+    if true {
+      let credentialsURL = Bundle.main.url(forResource: "credentials", withExtension: "json")!
+      let provider = ServiceAccountTokenProvider(credentialsURL:credentialsURL)
+      try! provider?.withToken({ (token, error) in
+        if let token = token {
+          self.token = token.AccessToken
+          completion()
+        }
+      })
+    } else {
+      let request : URLRequest = URLRequest(url:URL(string:TokenProviderURL)!)
+      let task = URLSession.shared.dataTask(with:request) {
+        (data, response, error) in
+        if let data = data {
+          let values = try! JSONSerialization.jsonObject(with: data) as! [String:Any]
+          let token = values["access_token"] as! String
+          self.token = token
+          completion()
+        } else {
+          completion()
+        }
       }
+      task.resume()
     }
-    task.resume()
   }
 
   func streamAudioData(_ audioData: NSData, completion: @escaping MyConversationCompletionHandler) {

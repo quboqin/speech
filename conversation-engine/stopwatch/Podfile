@@ -7,6 +7,9 @@ use_frameworks!
 target 'Stopwatch' do
 
   pod 'googleapis', :path => '.'
+  pod 'CryptoSwift', '~> 0.7.1'
+  pod 'BigInt', '~> 3.0.1'
+  pod 'SwiftyBase64', '~> 1.1.1'
 
 end
 
