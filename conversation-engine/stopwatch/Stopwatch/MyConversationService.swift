@@ -16,7 +16,7 @@
 import Foundation
 import googleapis
 
-let Host = "conversation.googleapis.com"
+let Host = "dialogflow.googleapis.com"
 let ProjectName = "hello-86"
 let AgentName = "hello-86"
 let SessionID = "001"
@@ -24,13 +24,13 @@ let TokenProviderURL = "http://localhost:8080"
 let SampleRate = 16000
 
 typealias MyConversationCompletionHandler =
-  (StreamingDetectIntentResponse?, NSError?) -> (Void)
+  (DFStreamingDetectIntentResponse?, NSError?) -> (Void)
 
 class MyConversationService {
   var sampleRate: Int = SampleRate
   private var streaming = false
 
-  private var client : ConversationService!
+  private var client : DFSessions!
   private var writer : GRXBufferedPipe!
   private var call : GRPCProtoCall!
 
@@ -76,7 +76,7 @@ class MyConversationService {
   func streamAudioData(_ audioData: NSData, completion: @escaping MyConversationCompletionHandler) {
     if (!streaming) {
       // if we aren't already streaming, set up a gRPC connection
-      client = ConversationService(host:Host)
+      client = DFSessions(host:Host)
       writer = GRXBufferedPipe()
       call = client.rpcToStreamingDetectIntent(
         withRequestsWriter: writer,
@@ -90,29 +90,26 @@ class MyConversationService {
       streaming = true
 
       // send an initial request message to configure the service
-      let queryParams = StreamingQueryParameters()
-      queryParams.session = "projects/" + ProjectName +
-        "/agents/" + AgentName +
-        "/sessions/" + SessionID
-
-      let queryInput = StreamingQueryInput()
-      let audioConfig = StreamingInputAudioConfig()
-      let inputAudioConfig = InputAudioConfig()
-      inputAudioConfig.audioEncoding = AudioEncoding(rawValue:1)!
+      let queryParams = DFQueryParameters()
+      let queryInput = DFQueryInput()
+      let inputAudioConfig = DFInputAudioConfig()
+      inputAudioConfig.audioEncoding = DFAudioEncoding(rawValue:1)!
       inputAudioConfig.languageCode = "en-US"
       inputAudioConfig.sampleRateHertz = Int32(sampleRate)
-      audioConfig.config = inputAudioConfig
-      audioConfig.singleUtterance = true
-      queryInput.audioConfig = audioConfig
+      queryInput.audioConfig = inputAudioConfig
 
-      let streamingRecognizeRequest = StreamingDetectIntentRequest()
-      streamingRecognizeRequest.queryParams = queryParams
-      streamingRecognizeRequest.queryInput = queryInput
-      writer.writeValue(streamingRecognizeRequest)
+      let streamingDetectIntentRequest = DFStreamingDetectIntentRequest()
+      streamingDetectIntentRequest.session = "projects/" + ProjectName +
+        "/agents/" + AgentName +
+        "/sessions/" + SessionID
+      streamingDetectIntentRequest.singleUtterance = true
+      streamingDetectIntentRequest.queryParams = queryParams
+      streamingDetectIntentRequest.queryInput = queryInput
+      writer.writeValue(streamingDetectIntentRequest)
     }
 
     // send a request message containing the audio data
-    let streamingRecognizeRequest = StreamingDetectIntentRequest()
+    let streamingRecognizeRequest = DFStreamingDetectIntentRequest()
     streamingRecognizeRequest.inputAudio = audioData as Data
     writer.writeValue(streamingRecognizeRequest)
   }
