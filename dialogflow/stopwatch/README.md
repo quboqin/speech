@@ -31,6 +31,9 @@ If you have not already done so, [enable Dialogflow for your project](https://cl
 - Say a few words and wait for the display to update when your speech is recognized.
 - Tap the button to stop capturing audio, or if audio capture has stopped because your speech was recognized, tap it again to start a new listening session.
 
+## Authentication
+For simplicity, this sample authenticates using [Google Cloud Service Accounts](https://cloud.google.com/compute/docs/access/service-accounts) using a process that is described [here](https://developers.google.com/identity/protocols/OAuth2ServiceAccount). Please note that this involves bundling your service account's private key in your app, a practice which is fundamentally insecure and [strongly discouraged](https://github.com/google/google-api-objectivec-client/issues/135). For production use, we recommend that your app download tokens from a secure online service. A very simple sample token server is in the [token-provider](token-provider) directory. The server is a Go program that requires a local installation of Go. To use it in the app, set `AuthenticateWithServiceAccountCredentials` in [StopwatchService.swift](Stopwatch/StopwatchService.swift) to false and be sure that you are running in the iOS simulator on the same system where the token server is running.
+
 [cloud-console]: https://console.cloud.google.com
 [git]: https://git-scm.com/
 [xcode]: https://developer.apple.com/xcode/
