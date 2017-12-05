@@ -17,11 +17,13 @@
 source $(dirname $0)/PROJECT.sh
 
 # List intents.
+echo "LIST INTENTS"
 curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
      -H "Content-Type: application/json; charset=utf-8" \
      "$SERVICE/intents"
   
 # Test "start stopwatch" command.
+echo "START STOPWATCH"
 curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
      -H "Content-Type: application/json; charset=utf-8" --data "{
   'query_input': {
@@ -33,6 +35,7 @@ curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
 }" "$SERVICE/sessions/$SESSION:detectIntent"
   
 # Test "stop stopwatch" command.
+echo "STOP STOPWATCH"
 curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
      -H "Content-Type: application/json; charset=utf-8" --data "{
   'query_input': {

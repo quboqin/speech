@@ -13,13 +13,11 @@
 # limitations under the License.
 #
 
-PROJECT=<your project name>
-
-AGENT=<your agent name>
+PROJECT=your-project-identifier
 
 SESSION=123456789
 
-SERVICE="https://conversation.googleapis.com/v1alpha/projects/$PROJECT/agents/$AGENT"
+SERVICE="https://dialogflow.googleapis.com/v2beta1/projects/$PROJECT/agent"
 
-gcloud auth activate-service-account --key-file=credentials.json
+gcloud auth activate-service-account --key-file=../credentials.json
 

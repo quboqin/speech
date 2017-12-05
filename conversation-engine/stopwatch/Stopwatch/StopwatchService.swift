@@ -17,16 +17,16 @@ import Foundation
 import googleapis
 
 let Host = "dialogflow.googleapis.com"
-let ProjectName = "hello-86"
-let AgentName = "hello-86"
+let ProjectName = "your-project-identifier" // UPDATE THIS
 let SessionID = "001"
-let TokenProviderURL = "http://localhost:8080"
 let SampleRate = 16000
+let AuthenticateWithServiceAccountCredentials = true
+let TokenProviderURL = "http://localhost:8080"
 
-typealias MyConversationCompletionHandler =
+typealias StopwatchCompletionHandler =
   (DFStreamingDetectIntentResponse?, NSError?) -> (Void)
 
-class MyConversationService {
+class StopwatchService {
   var sampleRate: Int = SampleRate
   private var streaming = false
 
@@ -36,18 +36,18 @@ class MyConversationService {
 
   private var token : String!
 
-  static let sharedInstance = MyConversationService()
+  static let sharedInstance = StopwatchService()
 
   func authorization() -> String {
-    if let token = self.token {
+    if self.token != nil {
       return "Bearer " + self.token
     } else {
-      return "No token was "
+      return "No token is available"
     }
   }
   
   func fetchToken(_ completion:@escaping ()->()) {
-    if true {
+    if AuthenticateWithServiceAccountCredentials {
       let credentialsURL = Bundle.main.url(forResource: "credentials", withExtension: "json")!
       let provider = ServiceAccountTokenProvider(credentialsURL:credentialsURL)
       try! provider?.withToken({ (token, error) in
@@ -73,7 +73,7 @@ class MyConversationService {
     }
   }
 
-  func streamAudioData(_ audioData: NSData, completion: @escaping MyConversationCompletionHandler) {
+  func streamAudioData(_ audioData: NSData, completion: @escaping StopwatchCompletionHandler) {
     if (!streaming) {
       // if we aren't already streaming, set up a gRPC connection
       client = DFSessions(host:Host)
@@ -81,7 +81,7 @@ class MyConversationService {
       call = client.rpcToStreamingDetectIntent(
         withRequestsWriter: writer,
         eventHandler: { (done, response, error) in
-          completion(response, error as? NSError)
+          completion(response, error as NSError?)
       })
       // authenticate using an authorization token (obtained using OAuth)
       call.requestHeaders.setObject(NSString(string:self.authorization()),
@@ -100,8 +100,7 @@ class MyConversationService {
 
       let streamingDetectIntentRequest = DFStreamingDetectIntentRequest()
       streamingDetectIntentRequest.session = "projects/" + ProjectName +
-        "/agents/" + AgentName +
-        "/sessions/" + SessionID
+        "/agent/sessions/" + SessionID
       streamingDetectIntentRequest.singleUtterance = true
       streamingDetectIntentRequest.queryParams = queryParams
       streamingDetectIntentRequest.queryInput = queryInput
@@ -109,9 +108,9 @@ class MyConversationService {
     }
 
     // send a request message containing the audio data
-    let streamingRecognizeRequest = DFStreamingDetectIntentRequest()
-    streamingRecognizeRequest.inputAudio = audioData as Data
-    writer.writeValue(streamingRecognizeRequest)
+    let streamingDetectIntentRequest = DFStreamingDetectIntentRequest()
+    streamingDetectIntentRequest.inputAudio = audioData as Data
+    writer.writeValue(streamingDetectIntentRequest)
   }
 
   func stopStreaming() {

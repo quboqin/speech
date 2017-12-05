@@ -27,7 +27,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     super.viewDidLoad()
     self.button.isEnabled = false
     AudioController.sharedInstance.delegate = self
-    MyConversationService.sharedInstance.fetchToken {
+    StopwatchService.sharedInstance.fetchToken {
       DispatchQueue.main.async { [unowned self] in
         self.button.isEnabled = true
       }
@@ -54,13 +54,13 @@ class ViewController : UIViewController, AudioControllerDelegate {
     audioData = NSMutableData()
     _ = AudioController.sharedInstance.prepare(specifiedSampleRate: SampleRate)
 
-    MyConversationService.sharedInstance.sampleRate = SampleRate
+    StopwatchService.sharedInstance.sampleRate = SampleRate
     _ = AudioController.sharedInstance.start()
   }
 
   func stopListening() {
     _ = AudioController.sharedInstance.stop()
-    MyConversationService.sharedInstance.stopStreaming()
+    StopwatchService.sharedInstance.stopStreaming()
     button.setTitle("Start Listening", for: .normal)
     listening = false
   }
@@ -75,7 +75,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         * 2 /* bytes/sample */);
 
     if (audioData.length > chunkSize) {
-      MyConversationService.sharedInstance.streamAudioData(
+      StopwatchService.sharedInstance.streamAudioData(
         audioData,
         completion: { [weak self] (response, error) in
           guard let strongSelf = self else {

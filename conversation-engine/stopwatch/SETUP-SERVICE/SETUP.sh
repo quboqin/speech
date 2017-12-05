@@ -21,10 +21,10 @@ curl -X POST -H "Authorization: Bearer "$(gcloud auth print-access-token) \
   'displayName': 'StartStopwatch',
   'priority': 500000,
   'mlEnabled': true,
-  'webhookState': 'WEBHOOK_STATE_DISABLED',
+  'webhookState': 'WEBHOOK_STATE_UNSPECIFIED',
   'trainingPhrases': [
     {
-      'type': 'TYPE_EXAMPLE',
+      'type': 'EXAMPLE',
       'parts': [
         {
           'text': 'start stopwatch'
@@ -32,20 +32,16 @@ curl -X POST -H "Authorization: Bearer "$(gcloud auth print-access-token) \
       ]
     }
   ],
-
-  'result': {
-    'action': 'start',
-    'messages': [
-        {
-          'text': {
-            'text': [
-             'Stopwatch started'
-            ]
-          }
+  'action': 'start',
+  'messages': [
+      {
+        'text': {
+          'text': [
+           'Stopwatch started'
+          ]
         }
-      ],
-    }
-,
+      }
+  ],
 }" "$SERVICE/intents"
   
 curl -X POST -H "Authorization: Bearer "$(gcloud auth print-access-token) \
@@ -53,10 +49,10 @@ curl -X POST -H "Authorization: Bearer "$(gcloud auth print-access-token) \
   'displayName': 'StopStopwatch',
   'priority': 500000,
   'mlEnabled': true,
-  'webhookState': 'WEBHOOK_STATE_DISABLED',
+  'webhookState': 'WEBHOOK_STATE_UNSPECIFIED',
   'trainingPhrases': [
     {
-      'type': 'TYPE_EXAMPLE',
+      'type': 'EXAMPLE',
       'parts': [
         {
           'text': 'stop stopwatch'
@@ -64,19 +60,15 @@ curl -X POST -H "Authorization: Bearer "$(gcloud auth print-access-token) \
       ]
     }
   ],
-
-  'result': {
-    'action': 'stop',
-    'messages': [
-        {
-          'text': {
-            'text': [
-             'Stopwatch stopped'
-            ]
-          }
+  'action': 'stop',
+  'messages': [
+      {
+        'text': {
+          'text': [
+           'Stopwatch stopped'
+          ]
         }
-      ],
-    }
-,
+      }
+  ],
 }" "$SERVICE/intents"
   
