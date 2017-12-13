@@ -1,0 +1,4 @@
+#/bin/sh
+
+echo "Removing Xcode temp files"
+rm -rf Speech.xcodeproj/xcuserdata Speech.xcodeproj/project.xcworkspace
