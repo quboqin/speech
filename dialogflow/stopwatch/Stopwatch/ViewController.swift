@@ -27,9 +27,15 @@ class ViewController : UIViewController, AudioControllerDelegate {
     super.viewDidLoad()
     self.button.isEnabled = false
     AudioController.sharedInstance.delegate = self
-    StopwatchService.sharedInstance.fetchToken {
-      DispatchQueue.main.async { [unowned self] in
-        self.button.isEnabled = true
+    StopwatchService.sharedInstance.fetchToken {(error) in
+      if let error = error {
+        DispatchQueue.main.async { [unowned self] in
+          self.textView.text = "Error: \(error)\n\nBe sure that you have a valid credentials.json in your app and a working network connection."
+        }
+      } else {
+        DispatchQueue.main.async { [unowned self] in
+          self.button.isEnabled = true
+        }
       }
     }
   }

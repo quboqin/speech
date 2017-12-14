@@ -27,6 +27,12 @@ let TokenProviderURL = "http://localhost:8080"
 typealias StopwatchCompletionHandler =
   (DFStreamingDetectIntentResponse?, NSError?) -> (Void)
 
+enum StopwatchServiceError: Error {
+  case unknownError
+  case invalidCredentials
+  case tokenNotAvailable
+}
+
 class StopwatchService {
   var sampleRate: Int = SampleRate
   private var streaming = false
@@ -47,16 +53,22 @@ class StopwatchService {
     }
   }
   
-  func fetchToken(_ completion:@escaping ()->()) {
+  func fetchToken(_ completion:@escaping (StopwatchServiceError?)->()) {
     if AuthenticateWithServiceAccountCredentials {
       let credentialsURL = Bundle.main.url(forResource: "credentials", withExtension: "json")!
       let provider = ServiceAccountTokenProvider(credentialsURL:credentialsURL)
-      try! provider?.withToken({ (token, error) in
+      if let provider = provider {
+      try! provider.withToken({ (token, error) in
         if let token = token {
           self.token = token.AccessToken
-          completion()
+          completion(nil)
+        } else {
+          completion(.tokenNotAvailable)
         }
       })
+      } else {
+        completion(.invalidCredentials)
+      }
     } else {
       let request : URLRequest = URLRequest(url:URL(string:TokenProviderURL)!)
       let task = URLSession.shared.dataTask(with:request) {
@@ -65,9 +77,9 @@ class StopwatchService {
           let values = try! JSONSerialization.jsonObject(with: data) as! [String:Any]
           let token = values["access_token"] as! String
           self.token = token
-          completion()
+          completion(nil)
         } else {
-          completion()
+          completion(.unknownError)
         }
       }
       task.resume()
