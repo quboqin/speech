@@ -15,6 +15,7 @@
 //
 import Foundation
 import googleapis
+import AuthLibrary
 
 let Host = "dialogflow.googleapis.com"
 let ProjectName = "your-project-identifier" // UPDATE THIS

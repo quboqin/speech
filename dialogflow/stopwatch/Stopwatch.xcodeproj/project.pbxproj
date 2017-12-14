@@ -13,13 +13,6 @@
 		D34C17D91C948F5800D69BCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D34C17D81C948F5800D69BCA /* Assets.xcassets */; };
 		D34C17DC1C948F5800D69BCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34C17DA1C948F5800D69BCA /* LaunchScreen.storyboard */; };
 		D35AE06C1FD5B1A800ABC0EE /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = D35AE06B1FD5B1A800ABC0EE /* credentials.json */; };
-		D35AE0781FD5B21500ABC0EE /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0701FD5B21500ABC0EE /* JWT.swift */; };
-		D35AE0791FD5B21500ABC0EE /* ServiceAccountTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0711FD5B21500ABC0EE /* ServiceAccountTokenProvider.swift */; };
-		D35AE07A1FD5B21500ABC0EE /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0721FD5B21500ABC0EE /* Token.swift */; };
-		D35AE07B1FD5B21500ABC0EE /* TokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0731FD5B21500ABC0EE /* TokenProvider.swift */; };
-		D35AE07C1FD5B21500ABC0EE /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0741FD5B21500ABC0EE /* Connection.swift */; };
-		D35AE07D1FD5B21500ABC0EE /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0751FD5B21500ABC0EE /* RSA.swift */; };
-		D35AE07E1FD5B21500ABC0EE /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AE0761FD5B21500ABC0EE /* ASN1.swift */; };
 		D392D9861C94937D002F5132 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D392D9851C94937D002F5132 /* Main.storyboard */; };
 		D3E34EA11D77541D00EF755D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E34EA01D77541D00EF755D /* AppDelegate.swift */; };
 		D3E34EA51D7757CC00EF755D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E34EA41D7757CC00EF755D /* ViewController.swift */; };
@@ -38,13 +31,6 @@
 		D34C17DB1C948F5800D69BCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D34C17DD1C948F5800D69BCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D35AE06B1FD5B1A800ABC0EE /* credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = credentials.json; sourceTree = "<group>"; };
-		D35AE0701FD5B21500ABC0EE /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JWT.swift; path = OAuth2/JWT.swift; sourceTree = "<group>"; };
-		D35AE0711FD5B21500ABC0EE /* ServiceAccountTokenProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceAccountTokenProvider.swift; path = OAuth2/ServiceAccountTokenProvider.swift; sourceTree = "<group>"; };
-		D35AE0721FD5B21500ABC0EE /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = OAuth2/Token.swift; sourceTree = "<group>"; };
-		D35AE0731FD5B21500ABC0EE /* TokenProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenProvider.swift; path = OAuth2/TokenProvider.swift; sourceTree = "<group>"; };
-		D35AE0741FD5B21500ABC0EE /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Connection.swift; path = OAuth2/Connection.swift; sourceTree = "<group>"; };
-		D35AE0751FD5B21500ABC0EE /* RSA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSA.swift; path = OAuth2/RSA.swift; sourceTree = "<group>"; };
-		D35AE0761FD5B21500ABC0EE /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ASN1.swift; path = OAuth2/ASN1.swift; sourceTree = "<group>"; };
 		D392D9851C94937D002F5132 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D3E34E9F1D77541C00EF755D /* Stopwatch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stopwatch-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3E34EA01D77541D00EF755D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +81,6 @@
 		D34C17CB1C948F5700D69BCA /* Stopwatch */ = {
 			isa = PBXGroup;
 			children = (
-				D35AE06E1FD5B20800ABC0EE /* OAuth2 */,
 				D3E34EA01D77541D00EF755D /* AppDelegate.swift */,
 				D34C17D81C948F5800D69BCA /* Assets.xcassets */,
 				D31E0EB91D77AA2F006A50AB /* AudioController.swift */,
@@ -115,20 +100,6 @@
 			children = (
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D35AE06E1FD5B20800ABC0EE /* OAuth2 */ = {
-			isa = PBXGroup;
-			children = (
-				D35AE0761FD5B21500ABC0EE /* ASN1.swift */,
-				D35AE0741FD5B21500ABC0EE /* Connection.swift */,
-				D35AE0701FD5B21500ABC0EE /* JWT.swift */,
-				D35AE0751FD5B21500ABC0EE /* RSA.swift */,
-				D35AE0711FD5B21500ABC0EE /* ServiceAccountTokenProvider.swift */,
-				D35AE0721FD5B21500ABC0EE /* Token.swift */,
-				D35AE0731FD5B21500ABC0EE /* TokenProvider.swift */,
-			);
-			name = OAuth2;
 			sourceTree = "<group>";
 		};
 		F657FA334EB8D9ABF1ACF569 /* Pods */ = {
@@ -220,9 +191,36 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Stopwatch/Pods-Stopwatch-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AuthLibrary/AuthLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBase64/SwiftyBase64.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/googleapis/googleapis.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AuthLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBase64.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/googleapis.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -235,13 +233,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stopwatch-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D8EE167099E5A7E524284D70 /* [CP] Copy Pods Resources */ = {
@@ -266,17 +267,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D35AE07E1FD5B21500ABC0EE /* ASN1.swift in Sources */,
-				D35AE0791FD5B21500ABC0EE /* ServiceAccountTokenProvider.swift in Sources */,
 				D31E0EBA1D77AA2F006A50AB /* AudioController.swift in Sources */,
-				D35AE07D1FD5B21500ABC0EE /* RSA.swift in Sources */,
 				D31E0EB81D778A56006A50AB /* StopwatchService.swift in Sources */,
 				D3E34EA51D7757CC00EF755D /* ViewController.swift in Sources */,
-				D35AE07B1FD5B21500ABC0EE /* TokenProvider.swift in Sources */,
 				D3E34EA11D77541D00EF755D /* AppDelegate.swift in Sources */,
-				D35AE07C1FD5B21500ABC0EE /* Connection.swift in Sources */,
-				D35AE0781FD5B21500ABC0EE /* JWT.swift in Sources */,
-				D35AE07A1FD5B21500ABC0EE /* Token.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
