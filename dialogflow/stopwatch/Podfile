@@ -7,7 +7,7 @@ use_frameworks!
 target 'Stopwatch' do
 
   pod 'googleapis', :path => '.'
-  pod 'AuthLibrary', :git => 'https://github.com/google/auth-library-swift.git', :tag => '0.3.2'
+  pod 'AuthLibrary', :git => 'https://github.com/google/auth-library-swift.git', :tag => '0.3.4'
 
 end
 

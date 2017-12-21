@@ -56,7 +56,10 @@ class StopwatchService {
   func fetchToken(_ completion:@escaping (StopwatchServiceError?)->()) {
     if AuthenticateWithServiceAccountCredentials {
       let credentialsURL = Bundle.main.url(forResource: "credentials", withExtension: "json")!
-      let provider = ServiceAccountTokenProvider(credentialsURL:credentialsURL)
+      let scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+      let provider = ServiceAccountTokenProvider(
+        credentialsURL:credentialsURL,
+        scopes:scopes)
       if let provider = provider {
       try! provider.withToken({ (token, error) in
         if let token = token {
