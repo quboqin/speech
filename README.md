@@ -28,3 +28,7 @@ Samples that demonstrate the [Dialogflow API](https://cloud.google.com/dialogflo
 ### [solutions](solutions)
 
 Samples that demonstrate systems built on Google Cloud Platform.
+
+### [screensaver](screensaver)
+
+A screensaver that features Google Cloud Platform products.
