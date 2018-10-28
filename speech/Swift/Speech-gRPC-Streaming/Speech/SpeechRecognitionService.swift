@@ -16,7 +16,7 @@
 import Foundation
 import googleapis
 
-let API_KEY : String = "YOUR_API_KEY"
+let API_KEY : String = "AIzaSyBZeCnbSasN0Nutu7LkFOYBxf-4OIHFjDA"
 let HOST = "speech.googleapis.com"
 
 typealias SpeechRecognitionCompletionHandler = (StreamingRecognizeResponse?, NSError?) -> (Void)
